@@ -97,7 +97,7 @@ class Fields
 	 * @return string
 	 * @author Joseph LeBlanc
 	 */
-	protected function getSystemName($label)
+	public function getSystemName(string $label)
 	{
 		$name = str_replace(' ', '_', $label);
 		return preg_replace('/[^A-Za-z_0-9]/', '', $name);
