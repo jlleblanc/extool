@@ -33,9 +33,7 @@ class Fields
 	public function __construct($fields = array())
 	{
 		if (count($fields)) {
-			foreach ($fields as $label => $type) {
-				$this->setField($label, $type)
-			}
+			$this->addFieldsFromArray($fields);
 		}
 	}
 
@@ -48,7 +46,7 @@ class Fields
 	 * @return boolean
 	 * @author Joseph LeBlanc
 	 */
-	public function setField($label, $type)
+	public function addField(string $label, string $type)
 	{
 		if (!isset($this->names[$label])) {
 			$this->names[$label] = $this->getSystemName($label);
@@ -60,13 +58,28 @@ class Fields
 	}
 
 	/**
+	 * Sets multiple fields, given an array of field types, keyed by human
+	 * friendly labels.
+	 *
+	 * @param array $fields 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function addFieldsFromArray(array $fields)
+	{
+		foreach ($fields as $label => $type) {
+			$this->addField($label, $type);
+		}
+	}
+
+	/**
 	 * Removes a field, given the human friendly label
 	 *
 	 * @param string $label 
 	 * @return boolean
 	 * @author Joseph LeBlanc
 	 */
-	public function removeField($label)
+	public function removeField(string $label)
 	{
 		if (isset($this->names[$label])) {
 			unset($this->names[$label]);
