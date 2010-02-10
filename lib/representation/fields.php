@@ -75,7 +75,7 @@ class Fields
 	 */
 	public function setKey($name)
 	{
-		if (in_array($name, $this->types)) {
+		if (in_array($name, $this->names)) {
 			$this->key = $name;
 			return true;
 		}
