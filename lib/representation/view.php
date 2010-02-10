@@ -8,7 +8,7 @@ class View
 {
 	protected $name;
 	protected $type = 'public';
-	protected $key;
+	protected $fields;
 	protected $access;
 
 	function __construct($name)
@@ -40,6 +40,14 @@ class View
 
 	public function __get($name)
 	{
+		if ($name == 'key') {
+			if (isset($this->fields->key)) {
+				return $this->fields->key;
+			} else {
+				throw new Exception("No Key Defined");
+			}
+		}
+
 		return $this->$name;
 	}
 }

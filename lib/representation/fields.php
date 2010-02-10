@@ -25,6 +25,14 @@ class Fields
 	protected $types = array();
 
 	/**
+	 * The key variable for the set of fields. Can be left unset, but necessary
+	 * for use in the context of tables and views.
+	 *
+	 * @var string
+	 */
+	protected $key;
+
+	/**
 	 * Accepts an array of field types, keyed by human friendly label
 	 *
 	 * @param array $labels 
@@ -51,6 +59,24 @@ class Fields
 		if (!isset($this->names[$label])) {
 			$this->names[$label] = $this->getSystemName($label);
 			$this->types[$label] = $type;
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Sets the key for the fields. The key specified in $name must already
+	 * be present in the fieldset.
+	 *
+	 * @param string $name 
+	 * @return boolean
+	 * @author Joseph LeBlanc
+	 */
+	public function setKey($name)
+	{
+		if (in_array($name, $this->types)) {
+			$this->key = $name;
 			return true;
 		}
 
