@@ -130,7 +130,7 @@ class Fields
 	}
 
 	/**
-	 * Allows us to get the names and types without being able to set them
+	 * Allows access to names and types without being able to set them
 	 *
 	 * @param string $name 
 	 * @return mixed
