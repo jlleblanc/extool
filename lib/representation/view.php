@@ -7,7 +7,7 @@ namespace Extool\Representation;
 class View
 {
 	protected $name;
-	protected $type = 'public';
+	protected $type = 'single';
 	protected $fields;
 	protected $access;
 
@@ -23,7 +23,7 @@ class View
 
 	public function setType($type)
 	{
-		if ($type == 'public' || $type == 'private') {
+		if ($type == 'single' || $type == 'list') {
 			$this->type = $type;
 			return true;
 		}
