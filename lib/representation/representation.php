@@ -75,6 +75,14 @@ class Representation
 		return true;
 	}
 
+	/**
+	 * Adds a public view, if it is not already present. The access of the view
+	 * is enforced by this function.
+	 *
+	 * @param View $view 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addPublicView(View $view)
 	{
 		if (isset($view->access != 'public')) {
@@ -86,6 +94,14 @@ class Representation
 		$this->public_views[$view->name] = $view;
 	}
 
+	/**
+	 * Adds a public model when a corresponding public view is available and
+	 * when the public model has not already been added.
+	 *
+	 * @param Model $model 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addPublicModel(Model $model)
 	{
 		if (isset($this->public_views[$model->name])) {
@@ -99,6 +115,13 @@ class Representation
 		throw new Exception("A matching public view for Model {$model->name} was not found");
 	}
 
+	/**
+	 * Adds a Table to the representation, if it is not already present.
+	 *
+	 * @param Table $table 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addTable(Table $table)
 	{
 		if (isset($this->tables[$table->name])) {
@@ -108,6 +131,14 @@ class Representation
 		$this->tables[$table->name] = $table;
 	}
 
+	/**
+	 * Adds an admin view, if it is not already present. The access of the view
+	 * is enforced by this function.
+	 *
+	 * @param View $view 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addAdminView(View $view)
 	{
 		if (isset($view->access != 'admin')) {
@@ -119,6 +150,14 @@ class Representation
 		$this->admin_views[$view->name] = $view;
 	}
 
+	/**
+	 * Adds an admin model when a corresponding admin view is available and
+	 * when the admin model has not already been added.
+	 *
+	 * @param Model $model 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addAdminModel(Model $model)
 	{
 		if (isset($this->admin_views[$model->name])) {
