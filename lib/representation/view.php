@@ -38,7 +38,7 @@ class View
 	 *
 	 * @var string
 	 */
-	protected $access;
+	protected $access = 'public';
 
 	/**
 	 * Requires the human-friendly name for the view.
