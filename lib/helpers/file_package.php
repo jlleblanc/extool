@@ -45,6 +45,8 @@ class FilePackage
 	 * Given the file root, this function writes all of the files in memory to
 	 * disk.
 	 *
+	 * TODO: this may be best implemented through a helper function/class.
+	 * 
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
@@ -101,6 +103,12 @@ class FilePackage
 		return $this->addFileRecursively($path, $file, $file_node[$next_segment]);
 	}
 
+	/**
+	 * Returns a nested array of File objects
+	 *
+	 * @return array
+	 * @author Joseph LeBlanc
+	 */
 	public function getAll()
 	{
 		return $this->files;
