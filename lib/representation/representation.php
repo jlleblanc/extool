@@ -68,7 +68,7 @@ class Representation
 	 */
 	public function validate()
 	{
-		if (!isset($public_views) || !isset($tables) || !isset($public_models)) {
+		if (!isset($this->public_views) || !isset($this->tables) || !isset($this->public_models)) {
 			return false;
 		}
 
@@ -110,9 +110,9 @@ class Representation
 			}
 
 			$this->public_models[$model->name] = $model;
+		} else {
+			throw new \Exception("A matching public view for Model {$model->name} was not found");
 		}
-
-		throw new \Exception("A matching public view for Model {$model->name} was not found");
 	}
 
 	/**
@@ -161,14 +161,14 @@ class Representation
 	public function addAdminModel(Model $model)
 	{
 		if (isset($this->admin_views[$model->name])) {
-			if (isset($this->admin_views[$model->name])) {
+			if (isset($this->admin_models[$model->name])) {
 				throw new \Exception("Admin Model {$model->name} is already present in this representation");
 			}
 
 			$this->admin_models[$model->name] = $model;
+		} else {
+			throw new \Exception("A matching admin view for Model {$model->name} was not found");
 		}
-
-		throw new \Exception("A matching admin view for Model {$model->name} was not found");
 	}
 
 	/**
@@ -185,6 +185,15 @@ class Representation
 			$this->data->mergeIn($data);
 		} else {
 			$this->data = $data;
+		}
+	}
+
+	public function __get($name)
+	{
+		if (isset($this->$name)) {
+			return $this->$name;
+		} else {
+			throw new \Exception("Property {$name} does not exist in the Representation");
 		}
 	}
 }
