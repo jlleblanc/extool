@@ -19,7 +19,7 @@ interface AdapterInterface {
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
-	public function decorateRepresentation(\Extool\Representation $representation);
+	public function decorateRepresentation(\Extool\Representation\Representation &$representation);
 
 	/**
 	 * Allows Extool to set the resource (such as filename) for the adapter 
