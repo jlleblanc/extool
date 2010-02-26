@@ -54,7 +54,7 @@ class Fields
 	 * @return boolean
 	 * @author Joseph LeBlanc
 	 */
-	public function addField(string $label, string $type)
+	public function addField($label, $type)
 	{
 		if (!isset($this->names[$label])) {
 			$this->names[$label] = $this->getSystemName($label);
@@ -105,7 +105,7 @@ class Fields
 	 * @return boolean
 	 * @author Joseph LeBlanc
 	 */
-	public function removeField(string $label)
+	public function removeField($label)
 	{
 		if (isset($this->names[$label])) {
 			unset($this->names[$label]);
@@ -123,7 +123,7 @@ class Fields
 	 * @return string
 	 * @author Joseph LeBlanc
 	 */
-	public function getSystemName(string $label)
+	public function getSystemName($label)
 	{
 		$name = str_replace(' ', '_', $label);
 		return preg_replace('/[^A-Za-z_0-9]/', '', $name);
