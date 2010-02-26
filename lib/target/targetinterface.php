@@ -1,5 +1,5 @@
 <?php
-namespace Extool\Target
+namespace Extool\Target;
 
 /**
  * An interface for getting and setting the target's configration, setting
@@ -8,7 +8,7 @@ namespace Extool\Target
  * @package default
  * @author Joseph LeBlanc
  */
-interface TargetInteface
+interface TargetInterface 
 {
 	/**
 	 * Returns a Configuration object outlining any data required by the 
@@ -36,7 +36,7 @@ interface TargetInteface
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
-	public function setRepresentation(Representation $representation);
+	public function setRepresentation(\Extool\Representation\Representation $representation);
 
 	/**
 	 * If the Representation is properly set, this function generates the code
