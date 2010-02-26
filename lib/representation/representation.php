@@ -85,10 +85,10 @@ class Representation
 	 */
 	public function addPublicView(View $view)
 	{
-		if (isset($view->access != 'public')) {
-			throw new Exception("View {$view->name} is not designated for 'public' access.");
+		if ($view->access != 'public') {
+			throw new \Exception("View {$view->name} is not designated for 'public' access.");
 		} else if (isset($this->public_views[$view->name])) {
-			throw new Exception("Public View {$view->name} is already present in this representation");
+			throw new \Exception("Public View {$view->name} is already present in this representation");
 		}
 
 		$this->public_views[$view->name] = $view;
@@ -106,13 +106,13 @@ class Representation
 	{
 		if (isset($this->public_views[$model->name])) {
 			if (isset($this->public_models[$model->name])) {
-				throw new Exception("Public Model {$model->name} is already present in this representation");
+				throw new \Exception("Public Model {$model->name} is already present in this representation");
 			}
 
 			$this->public_models[$model->name] = $model;
 		}
 
-		throw new Exception("A matching public view for Model {$model->name} was not found");
+		throw new \Exception("A matching public view for Model {$model->name} was not found");
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Representation
 	public function addTable(Table $table)
 	{
 		if (isset($this->tables[$table->name])) {
-			throw new Exception("Table {$table->name} is already present in this representation");
+			throw new \Exception("Table {$table->name} is already present in this representation");
 		}
 
 		$this->tables[$table->name] = $table;
@@ -141,10 +141,10 @@ class Representation
 	 */
 	public function addAdminView(View $view)
 	{
-		if (isset($view->access != 'admin')) {
-			throw new Exception("View {$view->name} is not designated for 'admin' access.");
+		if ($view->access != 'admin') {
+			throw new \Exception("View {$view->name} is not designated for 'admin' access.");
 		} else if (isset($this->admin_views[$view->name])) {
-			throw new Exception("Admin View {$view->name} is already present in this representation");
+			throw new \Exception("Admin View {$view->name} is already present in this representation");
 		}
 
 		$this->admin_views[$view->name] = $view;
@@ -162,13 +162,13 @@ class Representation
 	{
 		if (isset($this->admin_views[$model->name])) {
 			if (isset($this->admin_views[$model->name])) {
-				throw new Exception("Admin Model {$model->name} is already present in this representation");
+				throw new \Exception("Admin Model {$model->name} is already present in this representation");
 			}
 
 			$this->admin_models[$model->name] = $model;
 		}
 
-		throw new Exception("A matching admin view for Model {$model->name} was not found");
+		throw new \Exception("A matching admin view for Model {$model->name} was not found");
 	}
 
 	/**

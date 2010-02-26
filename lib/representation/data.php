@@ -77,7 +77,7 @@ class Data
 		if ($data->fields == $this->fields) {
 			$this->data = array_merge($this->data, $data->data);
 		} else {
-			throw new Exception("Data types do not match");
+			throw new \Exception("Data types do not match");
 		}
 	}
 

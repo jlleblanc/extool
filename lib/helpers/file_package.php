@@ -37,7 +37,7 @@ class FilePackage
 		if (file_exists($fileroot)) {
 			$this->fileroot = $fileroot;
 		} else {
-			throw new Exception("File root {$fileroot} does not exist");
+			throw new \Exception("File root {$fileroot} does not exist");
 		}
 	}
 
@@ -87,14 +87,14 @@ class FilePackage
 
 		if (count($path) == 0) {
 			if (isset($file_node[$next_segment])) {
-				throw new Exception("File {$next_segment} already exists");
+				throw new \Exception("File {$next_segment} already exists");
 			}
 
 			$file_node[$next_segment] = $file;
 			return true;
 		} else if (isset($file_node[$next_segment])) {
 			if ($file_node[$next_segment] instanceof File) {
-				throw new Exception("Invalid path: file {$next_segment} already exists");
+				throw new \Exception("Invalid path: file {$next_segment} already exists");
 			}
 		} else {
 			$file_node[$next_segment] = array();

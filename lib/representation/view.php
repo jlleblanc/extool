@@ -114,7 +114,7 @@ class View
 			if (isset($this->fields->key)) {
 				return $this->fields->key;
 			} else {
-				throw new Exception("No Key Defined");
+				throw new \Exception("No Key Defined");
 			}
 		}
 

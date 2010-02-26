@@ -43,7 +43,7 @@ class File
 		if (is_string($contents) || ($contents instanceof Snippet)) {
 			$this->contents = $contents;
 		} else {
-			throw new Exception("File contents must be a string or Snippet");
+			throw new \Exception("File contents must be a string or Snippet");
 		}
 	}
 
@@ -60,7 +60,7 @@ class File
 	{
 		if (isset($this->contents)) {
 			if ($this->contents instanceof Snippet) {
-				throw new Exception("The file contains a Snippet, you may only append to strings");
+				throw new \Exception("The file contains a Snippet, you may only append to strings");
 			} else {
 				$this->contents .= $contents;
 			}
