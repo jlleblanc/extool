@@ -80,11 +80,7 @@ class Table
 	public function __get($name)
 	{
 		if ($name == 'key') {
-			if (isset($this->fields->key)) {
-				return $this->fields->key;
-			} else {
-				throw new \Exception("No Key Defined");
-			}
+			return $this->fields->key;
 		}
 
 		return $this->$name;
