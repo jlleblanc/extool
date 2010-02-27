@@ -3,12 +3,14 @@ namespace Extool\Representation;
 
 /**
  * Represents a set of fields, keeping track of human friendly labels and 
- * field types.
+ * field types. It implements the Iterator interface, acting as an array with
+ * human-friendly field names as keys, and arrays containing the system 
+ * friendly name and type as values.
  *
  * @package default
  * @author Joseph LeBlanc
  */
-class Fields
+class Fields implements \Iterator
 {
 	/**
 	 * System friendly names, keyed by human friendly label
@@ -139,5 +141,69 @@ class Fields
 	public function __get($name)
 	{
 		return $this->$name;
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return mixed
+	 * @author Joseph LeBlanc
+	 */
+	public function current()
+	{
+		$name = current($this->names);
+		$type = current($this->types);
+
+		if ($name && $type) {
+			return array('name' => $name, 'type' => $type);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return string
+	 * @author Joseph LeBlanc
+	 */
+	public function key()
+	{
+		return key($this->names);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function next()
+	{
+		next($this->names);
+		next($this->types);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function rewind()
+	{
+		reset($this->names);
+		reset($this->types);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return bool
+	 * @author Joseph LeBlanc
+	 */
+	public function valid()
+	{
+		return $this->current() !== false;
 	}
 }
