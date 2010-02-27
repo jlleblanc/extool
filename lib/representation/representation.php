@@ -19,21 +19,21 @@ class Representation
 	 *
 	 * @var array
 	 */
-	protected $public_views;
+	protected $public_views = false;
 
 	/**
 	 * Model objects matching the public view objects
 	 *
 	 * @var array
 	 */
-	protected $public_models;
+	protected $public_models = false;
 
 	/**
 	 * Table objects for the extension as a whole.
 	 *
 	 * @var array
 	 */
-	protected $tables;
+	protected $tables = false;
 
 
 	// These objects are optional.
@@ -43,21 +43,21 @@ class Representation
 	 *
 	 * @var array
 	 */
-	protected $admin_views;
+	protected $admin_views = false;
 
 	/**
 	 * Model objects matching the admin view objects
 	 *
 	 * @var array
 	 */
-	protected $admin_models;
+	protected $admin_models = false;
 
 	/**
 	 * Data the extension should be prefilled with on installation.
 	 *
 	 * @var string
 	 */
-	protected $data;
+	protected $data = false;
 
 	/**
 	 * Determines whether the object has all of the properties set necessary
@@ -188,6 +188,14 @@ class Representation
 		}
 	}
 
+	/**
+	 * This getter checks to make sure that a property exists before returning
+	 * it. For this reason, all valid properties are set to false by default.
+	 *
+	 * @param string $name 
+	 * @return mixed
+	 * @author Joseph LeBlanc
+	 */
 	public function __get($name)
 	{
 		if (isset($this->$name)) {
