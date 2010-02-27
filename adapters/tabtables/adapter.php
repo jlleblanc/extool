@@ -46,8 +46,7 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 
 	public function setResource($resource)
 	{
-		if(is_file($resource))
-		{
+		if(is_file($resource)) {
 			$this->resource = $resource;
 		} else {
 			throw new \Exception("File does not exist");
