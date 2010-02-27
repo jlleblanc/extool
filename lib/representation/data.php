@@ -4,12 +4,13 @@ namespace Extool\Representation;
 /**
  * This class is designed for filtering and containing a dataset. A Fields
  * object is required for construction and is later used to filter the data
- * that gets passed in.
+ * that gets passed in. It implements Iterator so that the internal rows in the
+ * data array can be accessed through foreach() loops.
  *
  * @package default
  * @author Joseph LeBlanc
  */
-class Data
+class Data implements \Iterator
 {
 	/**
 	 * An object representing the fields the dataset is filtered against.
@@ -91,5 +92,60 @@ class Data
 	public function __get($name)
 	{
 		return $this->$name;
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return mixed
+	 * @author Joseph LeBlanc
+	 */
+	public function current()
+	{
+ 		return current($this->data);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return string
+	 * @author Joseph LeBlanc
+	 */
+	public function key()
+	{
+		return key($this->data);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function next()
+	{
+		next($this->data);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function rewind()
+	{
+		reset($this->data);
+	}
+
+	/**
+	 * Iterator function
+	 *
+	 * @return bool
+	 * @author Joseph LeBlanc
+	 */
+	public function valid()
+	{
+		return $this->current() !== false;
 	}
 }
