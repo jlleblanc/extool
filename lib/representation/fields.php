@@ -25,12 +25,12 @@ class Fields
 	protected $types = array();
 
 	/**
-	 * The key variable for the set of fields. Can be left unset, but necessary
+	 * The key variable for the set of fields. Can be left false, but necessary
 	 * for use in the context of tables and views.
 	 *
 	 * @var string
 	 */
-	protected $key;
+	protected $key = false;
 
 	/**
 	 * Accepts an array of field types, keyed by human friendly label
