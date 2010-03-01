@@ -42,10 +42,10 @@ class Snippet
 			if (isset($this->fields[$field])) {
 				$this->fields[$field][] = $contents;
 			} else {
-				throw new Exception("Could not add snippet: field {$field} is invalid");
+				throw new \Exception("Could not add snippet: field {$field} is invalid");
 			}
 		} else {
-			throw new Exception("Could not add snippet: must be of type Snippet or string, " . gettype($contents) . "given.");
+			throw new \Exception("Could not add snippet: must be of type Snippet or string, " . gettype($contents) . " given.");
 		}
 	}
 
