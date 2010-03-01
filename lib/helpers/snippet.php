@@ -65,10 +65,19 @@ class Snippet
 		$string = $this->contents;
 
 		foreach ($this->fields as $field => $snips) {
+
+			$spacing = '';
+			// disappointed that I can't seem to correctly match whitespace
+			// at the beginning of a line
+			$pattern = '/([\t ]*)\{\{' . $field . '\}\}/';
+			if (preg_match($pattern, $this->contents, $matches)) {
+				$spacing = $matches[1];
+			}
+
 			$replacement = '';
 
 			// Also add tabbing here
-			$replacement .= implode("\n", $snips);
+			$replacement .= implode("\n{$spacing}", $snips);
 
 			$string = str_replace('{{' . $field . '}}', $replacement, $string);
 		}
