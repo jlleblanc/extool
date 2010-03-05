@@ -77,6 +77,8 @@ class Fields implements \Iterator
 	 */
 	public function setKey($name)
 	{
+		$name = $this->getSystemName($name);
+
 		if (in_array($name, $this->names)) {
 			$this->key = $name;
 			return true;

@@ -59,12 +59,16 @@ class Table
 	public function createDefaultKey()
 	{
 		// Do not create a key if one exists
-		if (isset($this->fields->key)) {
+		if ($this->fields->key != false) {
 			return false;
 		}
 
 		$this->fields->addField($this->name . '_id', 'integer');
-		return $this->fields->setKey($this->name . '_id');
+		if (!$this->fields->setKey($this->name . '_id')) {
+			throw new \Exception("Key {$this->name}_id could not be set");
+		}
+
+		return true;
 	}
 
 	/**
