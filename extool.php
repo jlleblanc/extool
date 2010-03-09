@@ -24,5 +24,8 @@ if ($rep->validate()) {
 	require_once 'targets/PlainOldMySQL/target.php';
 	$target = new Extool\Target\PlainOldMySQL();
 	$target->setRepresentation($rep);
-	$target->generate();
+	$files = $target->generate();
+
+	$files->setRoot('/Users/josephleblanc/Desktop');
+	$files->writeAll();
 }

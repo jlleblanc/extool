@@ -13,7 +13,8 @@ class FilePackage
 	private $files;
 
 	/**
-	 * Optionally accepts a path where files should be written
+	 * Optionally accepts a path (without trailing slash) where files should be
+	 * written.
 	 *
 	 * @param string $fileroot 
 	 * @author Joseph LeBlanc
@@ -26,7 +27,8 @@ class FilePackage
 	}
 
 	/**
-	 * Sets the path where files should be written. Expects a clean filepath.
+	 * Sets the path where files should be written. Expects a clean filepath,
+	 * without the trailing slash.
 	 *
 	 * @param string $root 
 	 * @return void
@@ -52,7 +54,35 @@ class FilePackage
 	 */
 	public function writeAll()
 	{
+		if (!isset($this->fileroot)) {
+			throw new \Exception("The file root has not been set");
+		}
 
+		if (!isset($this->files)) {
+			throw new \Exception("No files to write");
+		}
+
+		$this->writeFilesRecursively($this->files);
+	}
+
+	public function writeFilesRecursively($files, $path = array())
+	{
+		foreach ($files as $name => $file) {
+			if (is_array($file)) {
+				$path[] = $name;
+				$this->writeFilesRecursively($file, $path);
+			} else {
+				$directory = $this->fileroot . '/' . implode('/', $path);
+
+				if (!is_dir($directory)) {
+					mkdir($directory);
+				}
+
+				$fullpath = $directory . '/' . $name;
+
+				file_put_contents($fullpath, $file);
+			}
+		}
 	}
 
 	/**
