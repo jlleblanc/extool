@@ -22,29 +22,19 @@ class PlainOldMySQL implements \Extool\Target\TargetInterface
 
 	public function generate()
 	{
-		echo "PUBLIC VIEWS:\n";
-		foreach ($this->rep->public_views as $view) {
-			echo "$view->name\n";
-		}
+		$files = new \Extool\Helpers\FilePackage();
 
-		echo "\nPUBLIC MODELS:\n";
-		foreach ($this->rep->public_models as $model) {
-			echo "$model->name\n";
-		}
+		$install_file = new \Extool\Helpers\File();
 
-		echo "\nADMIN VIEWS:\n";
-		foreach ($this->rep->admin_views as $view) {
-			echo "$view->name\n";
-		}
-
-		echo "\nADMIN MODELS:\n";
-		foreach ($this->rep->admin_models as $model) {
-			echo "$model->name\n";
-		}
-
-		echo "\nTABLES:\n";
 		foreach ($this->rep->tables as $table) {
-			echo "$table->name\n";
-		}	
+			$table->createDefaultKey();
+
+			$mysql = new \Extool\Helpers\MySQL($table);
+			$install_file->appendContents($mysql->generateCreate() . "\n\n");
+		}
+
+		$files->addFile('admin/install.mysql.sql', $install_file);
+
+		return $files;
 	}
 }
