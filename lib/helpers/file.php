@@ -56,15 +56,10 @@ class File
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
-	public function appendContents(string $contents)
+	public function appendContents($contents)
 	{
 		if (isset($this->contents)) {
-			if ($this->contents instanceof Snippet) {
-				throw new \Exception("The file contains a Snippet, you may only append to strings");
-			} else {
-				$this->contents .= $contents;
-			}
-			
+			$this->contents .= $contents;
 		} else {
 			$this->setContents($contents);
 		}
