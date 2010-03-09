@@ -71,7 +71,7 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 		$current_table = '';
 		foreach ($lines as $line) {
 			if (substr_count($line, "\t")) {
-				$this->table_fields[$current_table]->addField(trim($line), 'string');
+				$this->table_fields[$current_table]->addField(trim($line), 'text');
 			} else if ($line != "") {
 				$current_table = trim($line);
 				$this->table_fields[$current_table] = new Extool\Representation\Fields();
