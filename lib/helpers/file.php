@@ -75,7 +75,7 @@ class File
 	 */
 	public function __tostring()
 	{
-		return $this->contents;
+		return (string) $this->contents;
 	}
 
 	/**
