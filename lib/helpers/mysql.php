@@ -17,6 +17,8 @@ class MySQL
 
 	protected $snippets;
 
+	private $lowercase = true;
+
 	/**
 	 * Requires a Table object for generating SQL
 	 *
@@ -106,20 +108,33 @@ class MySQL
 
 		// Add the key first, because people expect it there.
 		if ($this->table->key) {
+			if ($this->lowercase) {
+				$key = strtolower($this->table->key);
+			} else {
+				$key = $this->table->key;
+			}
+
 			$field = $this->snippets->getSnippet('field');
-			$field->assign('field', $this->table->key);
+			$field->assign('field', $key);
 			$field->assign('definition', 'SERIAL');
 			$tableSnip->add('fields', $field);
 
 			$field = $this->snippets->getSnippet('key');
-			$field->assign('key_name', $this->table->key);
+			$field->assign('key_name', $key);
 			$tableSnip->add('key', $field);
 		}
 
 		foreach ($this->table->fields as $field_info) {
 			if ($field_info['name'] != $this->table->key) {
 				$field = $this->snippets->getSnippet('field');
-				$field->assign('field', $field_info['name']);
+
+				if ($this->lowercase) {
+					$field_name = strtolower($field_info['name']);
+				} else {
+					$field_name = $field_info['name'];
+				}
+
+				$field->assign('field', $field_name);
 				$field->assign('definition', $this->getSQLType($field_info['type']));
 				$tableSnip->add('fields', $field);
 			}
@@ -154,6 +169,23 @@ class MySQL
 			throw new \Exception("No Data to be used for generating inserts");
 		}
 
+	}
+
+	/**
+	 * Sets the $lowercase property. If true, all column names will be
+	 * generated in lowercase
+	 *
+	 * @param boolean $lowercase 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function setLowercase($lowercase = true)
+	{
+		if ($lowercase) {
+			$this->lowercase = true;
+		}
+
+		$this->lowercase = false;
 	}
 
 	/**
