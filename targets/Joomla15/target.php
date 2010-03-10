@@ -55,7 +55,12 @@ class Joomla15 implements \Extool\Target\TargetInterface
 			$tableSnip = $this->snippets->getSnippet('table');
 			$tableSnip->assign('table_name', $table_name);
 			$tableSnip->assign('table_uc_name', ucfirst($table_name));
-			$tableSnip->assign('variables', $this->makeTableFields($table->fields));
+
+			foreach ($table->fields as $field) {
+				$field_snip = $this->snippets->getSnippet('table_field');
+				$field_snip->assign('field', strtolower($field['name']));
+				$tableSnip->add('variables', $field_snip);
+			}
 
 			$fileSnip = $this->snippets->getSnippet('code');
 			$fileSnip->assign('code', $tableSnip);
@@ -64,18 +69,5 @@ class Joomla15 implements \Extool\Target\TargetInterface
 			$tableFile->setContents($fileSnip);
 			$this->files->addFile("admin/tables/{$table_name}.php", $tableFile);
 		}	
-	}
-
-	private function makeTableFields($fields)
-	{
-		$newFields = array();
-		
-		foreach ($fields as $field) {
-			$field = strtolower($field['name']);
-						
-			$newFields[] = "var \${$field} = null;";
-		}
-		
-		return implode("\n\t", $newFields);
 	}
 }
