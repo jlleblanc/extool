@@ -27,7 +27,10 @@ class Types
 			return false;
 		},
 		'html' => function ($value) {
-			// TODO
+			if (strlen(strip_tags($value))) {
+				return true;
+			}
+
 			return false;
 		},
 		'url'  => function ($value) {
