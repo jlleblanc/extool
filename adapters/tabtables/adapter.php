@@ -10,6 +10,9 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 	{
 		$this->parse();
 
+		$pieces = explode('/', $this->resource);
+		$rep->setName(array_pop($pieces));
+
 		foreach ($this->table_fields as $table_name => $fields) {
 			$table = new \Extool\Representation\Table($table_name);
 			$table->setFields($fields);
@@ -72,7 +75,15 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 		$current_table = '';
 		foreach ($lines as $line) {
 			if (substr_count($line, "\t")) {
-				$this->table_fields[$current_table]->addField(trim($line), 'text');
+				$field_name = trim($line);
+
+				$type = 'text';
+
+				if (preg_match('/[_ ]id$/Ui', $line)) {
+					$type = 'integer';
+				} 
+
+				$this->table_fields[$current_table]->addField($line, $type);
 			} else if ($line != "") {
 				$current_table = trim($line);
 				$this->table_fields[$current_table] = new \Extool\Representation\Fields();
