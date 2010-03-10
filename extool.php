@@ -7,7 +7,14 @@ function __autoload($classname)
 	// remove Extool from the segments
 	array_shift($segments);
 	$file = implode('/', $segments);
-	require_once 'lib/' . $file . '.php';
+
+	$path = 'lib/' . $file . '.php';
+
+	if (file_exists($path)) {
+		require_once $path;
+	} else if ($segments[0] == 'Target'){
+		require_once 'targets/' . array_pop($segments) . '/target.php';
+	}
 }
 
 
@@ -21,7 +28,6 @@ $rep = new Extool\Representation\Representation();
 $adapter->decorateRepresentation($rep);
 
 if ($rep->validate()) {
-	require_once 'targets/PlainOldMySQL/target.php';
 	$target = new Extool\Target\PlainOldMySQL();
 	$target->setRepresentation($rep);
 	$files = $target->generate();
