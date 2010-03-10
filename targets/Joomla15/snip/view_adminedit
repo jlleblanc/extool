@@ -1,0 +1,11 @@
+$cid = JRequest::getVar('cid', array(0), '', 'array');
+$id = (int) $cid[0];
+
+if (!$id) {
+	$id = JRequest::getInt('id', 0);
+}
+
+$row =& JTable::getInstance('{{table}}', 'Table');
+$row->load($id);
+ 
+$this->assignRef('row', $row);

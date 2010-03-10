@@ -1,0 +1,10 @@
+jimport( 'joomla.application.component.view' );
+
+class {{component}}View{{view}} extends JView
+{
+	function display($tpl = null)
+	{
+		{{modelData}}
+		parent::display($tpl);
+	}
+}

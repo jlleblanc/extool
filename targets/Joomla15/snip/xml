@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
+<install type="component" version="1.5.0">
+	<name>{{component}}</name>
+	<creationDate>{{date}}</creationDate>
+	<author>{{author}}</author>
+	<authorEmail>{{email}}</authorEmail>
+	<copyright>{{copyright}}</copyright>
+	<license>{{license}}</license>
+	<version>{{version}}</version>
+	<description>{{description}}</description>
+	<menu link="option=com_{{component}}">{{name}}</menu>
+	<files folder="site">
+		<folder>models</folder>
+		<filename>{{component}}.php</filename>
+		<filename>controller.php</filename>
+		<folder>views</folder>
+	</files>
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install.mysql.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">uninstall.mysql.sql</file>
+		</sql>
+	</uninstall>
+	<administration>
+		<menu>{{name}}</menu>
+		<submenu>
+			{{submenu_items}}
+		</submenu>
+		<files folder="admin">
+			<filename>install.mysql.sql</filename>
+			<filename>uninstall.mysql.sql</filename>
+			<filename>{{component}}.php</filename>
+			<folder>controllers</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<folder>models</folder>
+		</files>
+	</administration>
+</install>
+

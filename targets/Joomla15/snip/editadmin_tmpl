@@ -1,0 +1,25 @@
+<?php
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
+JToolBarHelper::title( '{{friendlyViewName}}' );
+
+JToolBarHelper::cancel();
+JToolBarHelper::save();
+
+?>
+<form action="index.php" method="post" name="adminForm">
+	<div class="col width-45">
+		<fieldset class="adminform">
+		<legend><?php echo JText::_( 'Details' ); ?></legend>
+		<table class="admintable">
+			{{fields}}
+		</table>
+		</fieldset>
+	</div>
+	
+	<input type="hidden" name="controller" value="{{controller}}" />
+	<input type="hidden" name="id" value="<?php echo $this->row->id ?>" />
+	<input type="hidden" name="option" value="<?php echo $option ?>" />
+	<input type="hidden" name="task" value="" />
+	<?php echo JHTML::_( 'form.token' ); ?>
+</form>

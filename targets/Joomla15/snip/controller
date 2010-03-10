@@ -1,0 +1,16 @@
+jimport('joomla.application.component.controller');
+
+class {{component}}Controller{{controller_name}} extends JController
+{	
+	{{functions}}
+	function display()
+	{
+		$view = JRequest::getVar('view', '');
+		
+		if ($view == '') {
+			JRequest::setVar('view', '{{default_view}}');
+		}
+		
+		parent::display();
+	}
+}

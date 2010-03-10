@@ -1,0 +1,1 @@
+<td>{{preWrap}}<?php echo $row->{{field}} ?>{{postWrap}}</td>

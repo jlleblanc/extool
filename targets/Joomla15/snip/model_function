@@ -1,0 +1,10 @@
+function get{{tableCapsName}}()
+{
+	if (!isset($this->{{tableName}}))
+	{
+		$query = "{{query}}";
+		$this->{{tableName}} = $this->_getList($query);
+	}
+
+	return $this->{{tableName}};
+}

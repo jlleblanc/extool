@@ -1,0 +1,16 @@
+<?php defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
+<table id="{{viewname}}">
+	<thead>
+		<tr>
+			{{headers}}
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($this->{{tablename}} as $row): ?>
+		<?php $link = JRoute::_('index.php?option=' . $option . '&amp;view={{singleviewname}}&amp;id='. $row->id); ?>
+		<tr>
+			{{fields}}
+		</tr>
+	<?php endforeach ?>
+	</tbody>
+</table>

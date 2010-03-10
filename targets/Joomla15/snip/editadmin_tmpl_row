@@ -1,0 +1,10 @@
+<tr>
+	<td width="110" class="key">
+		<label for="title">
+			{{fieldTitle}}
+		</label>
+	</td>
+	<td>
+		<input class="inputbox" type="text" name="{{fieldName}}" size="60" value="<?php echo $this->row->{{fieldName}}; ?>" />
+	</td>
+</tr>

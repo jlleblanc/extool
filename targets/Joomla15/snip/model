@@ -1,0 +1,8 @@
+jimport('joomla.application.component.model');
+
+class {{component}}Model{{model}} extends JModel
+{
+	{{dataVariables}}
+	
+	{{dataFunctions}}
+}
