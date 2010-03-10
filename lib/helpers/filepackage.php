@@ -65,6 +65,17 @@ class FilePackage
 		$this->writeFilesRecursively($this->files);
 	}
 
+	/**
+	 * Given an array of file contents keyed by filename, this function will
+	 * recursively work its way through the array and write out the files. When
+	 * the value of an element in the array is another array, the recursion
+	 * begins. The path is built as the function recurses.
+	 *
+	 * @param array $files 
+	 * @param array $path 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function writeFilesRecursively($files, $path = array())
 	{
 		foreach ($files as $name => $file) {

@@ -45,6 +45,15 @@ class MySQL
 		$this->name = strtolower($this->name);
 	}
 
+	/**
+	 * Given a Data object, this function will add the data to the MySQL
+	 * object. If the MySQL object already contains a Data object, the two
+	 * objects are merged together.
+	 *
+	 * @param Data $data 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function addData(\Extool\Representation\Data $data)
 	{
 		if ($data->fields != $table->fields) {
@@ -58,6 +67,14 @@ class MySQL
 		}
 	}
 
+	/**
+	 * Given an Extool type, this function returns a corresponding MySQL column
+	 * type.
+	 *
+	 * @param string $type 
+	 * @return string
+	 * @author Joseph LeBlanc
+	 */
 	public function getSQLType($type)
 	{
 		static $type_map = array(
@@ -76,6 +93,12 @@ class MySQL
 		return $type_map[$type];
 	}
 
+	/**
+	 * Generates MySQL CREATE TABLE statements
+	 *
+	 * @return Snippet
+	 * @author Joseph LeBlanc
+	 */
 	public function generateCreate()
 	{
 		$tableSnip = $this->snippets->getSnippet('table');
@@ -105,11 +128,26 @@ class MySQL
 		return $tableSnip;
 	}
 
+	/**
+	 * Generates MySQL DROP TABLE statements
+	 *
+	 * @return Snippet
+	 * @author Joseph LeBlanc
+	 */
 	public function generateDrop()
 	{
-		
+		$field = $this->snippets->getSnippet('drop');
+		$field->assign('table', $this->name);
+
+		return $field;
 	}
 
+	/**
+	 * Generates MySQL INSERT statements, if data for the MySQL object is set.
+	 *
+	 * @return Snippet
+	 * @author Joseph LeBlanc
+	 */
 	public function generateInsert()
 	{
 		if (!isset($this->data)) {

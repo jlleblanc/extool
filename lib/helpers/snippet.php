@@ -16,6 +16,12 @@ class Snippet
 	protected $contents;
 	protected $fields = array();
 
+	/**
+	 * Requires the text contents of the Snippet.
+	 *
+	 * @param string $contents 
+	 * @author Joseph LeBlanc
+	 */
 	function __construct($contents)
 	{
 		if (is_string($contents)) {
@@ -27,15 +33,37 @@ class Snippet
 		$this->extractFields();
 	}
 
+	/**
+	 * Assigns a Snippet or string to the specified field, given that the
+	 * field exists. Calling this function will overwrite any existing snippets
+	 * or strings currently assigned to the field. Use Snippet::add() to append
+	 * strings or snippets.
+	 *
+	 * @param string $field 
+	 * @param mixed $contents 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function assign($field, $contents)
 	{
 		if (isset($this->fields[$field])) {
 			// reset the field before adding the contents
 			$this->fields[$field] = array();
 			$this->add($field, $contents);
+		} else {
+			throw new \Exception("Field {$field} not present in Snippet");
 		}
 	}
 
+	/**
+	 * Adds the Snippet or string in $contents to the specified field, if the
+	 * field exists.
+	 *
+	 * @param string $field 
+	 * @param mixed $contents 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function add($field, $contents)
 	{
 		if ($contents instanceof Snippet || is_string($contents)) {
@@ -49,6 +77,13 @@ class Snippet
 		}
 	}
 
+	/**
+	 * Scans the contents of the Snippet for fields, marked with double curly
+	 * braces. An example would be {{field}}.
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function extractFields()
 	{
 		preg_match_all('/\{\{(.*)\}\}/Ums', $this->contents, $matches);
@@ -60,6 +95,13 @@ class Snippet
 		}
 	}
 
+	/**
+	 * Cycles through all Snippets and strings assigned to fields in the 
+	 * snippet, then returns a searched and replaced version of the Snippet.
+	 *
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function __tostring()
 	{
 		$string = $this->contents;
@@ -85,6 +127,14 @@ class Snippet
 		return $string;
 	}
 
+	/**
+	 * Allows the retrieval of the protected member variables. If $fields is
+	 * specified, only the field names are specified
+	 *
+	 * @param string $name 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function __get($name)
 	{
 		if ($name == 'fields') {

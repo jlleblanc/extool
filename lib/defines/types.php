@@ -59,6 +59,13 @@ class Types
 		}
 	);
 
+	/**
+	 * Returns an array of all the possible types that $value validates.
+	 *
+	 * @param mixed $value 
+	 * @return array
+	 * @author Joseph LeBlanc
+	 */
 	public function determineValidTypes($value)
 	{
 		$types = array();
@@ -72,12 +79,26 @@ class Types
 		return $types;
 	}
 
+	/**
+	 * Given a value, this function returns the most specific type that the
+	 * value validates.
+	 *
+	 * @param mixed $value 
+	 * @return string
+	 * @author Joseph LeBlanc
+	 */
 	public function determineType($value)
 	{
 		$types = $this->determineValidTypes($value);
 		return array_pop($types);
 	}
 
+	/**
+	 * Returns an array of all valid value types.
+	 *
+	 * @return array
+	 * @author Joseph LeBlanc
+	 */
 	public function getValidTypes()
 	{
 		return array_keys($this->valid_types);
