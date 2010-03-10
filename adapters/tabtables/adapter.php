@@ -1,4 +1,5 @@
 <?php
+namespace Extool\Adapter;
 
 class TabTables implements \Extool\Adapter\AdapterInterface
 {
@@ -10,16 +11,16 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 		$this->parse();
 
 		foreach ($this->table_fields as $table_name => $fields) {
-			$table = new Extool\Representation\Table($table_name);
+			$table = new \Extool\Representation\Table($table_name);
 			$table->setFields($fields);
 			$rep->addTable($table);			
 
-			$model = new Extool\Representation\Model($table_name);
+			$model = new \Extool\Representation\Model($table_name);
 			$model->setCriteria($fields);
 			$model->addTable($table);
 
 			// Generate four views for each table
-			$view = new Extool\Representation\View($table_name);
+			$view = new \Extool\Representation\View($table_name);
 			$view->setFields($fields);
 			$rep->addPublicView($view);
 			$rep->addPublicModel($model);
@@ -29,11 +30,11 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 			$rep->addAdminModel($model);
 
 			// Create new model for the list views
-			$model = new Extool\Representation\Model($table_name . ' List');
+			$model = new \Extool\Representation\Model($table_name . ' List');
 			$model->setCriteria($fields);
 			$model->addTable($table);
 
-			$view = new Extool\Representation\View($table_name . ' List');
+			$view = new \Extool\Representation\View($table_name . ' List');
 			$view->setFields($fields);
 			$rep->addPublicView($view);
 			$rep->addPublicModel($model);
@@ -74,7 +75,7 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 				$this->table_fields[$current_table]->addField(trim($line), 'text');
 			} else if ($line != "") {
 				$current_table = trim($line);
-				$this->table_fields[$current_table] = new Extool\Representation\Fields();
+				$this->table_fields[$current_table] = new \Extool\Representation\Fields();
 			}
 		}
 	}
