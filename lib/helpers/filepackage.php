@@ -102,13 +102,17 @@ class FilePackage
 	 * file as necessary.
 	 *
 	 * @param string $path 
-	 * @param string $contents 
+	 * @param mixed $contents 
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
-	public function addFile($path, File $file)
+	public function addFile($path, $file)
 	{
 		$path_array = explode('/', $path);
+
+		if (is_string($file) || ($file instanceof Snippet)) {
+			$file = new File($file);
+		}
 
 		$this->addFileRecursively($path_array, $file, $this->files);
 	}
