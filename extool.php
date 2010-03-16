@@ -10,6 +10,8 @@ function __autoload($classname)
 
 	$path = 'lib/' . $file . '.php';
 
+	// I really don't like this logic at all. Need to find a better way of 
+	// bringing individual targets and adapters into the mix.
 	if (file_exists($path)) {
 		require_once $path;
 	} else if ($segments[0] == 'Target'){
@@ -30,7 +32,7 @@ $rep = new Extool\Representation\Representation();
 $adapter->decorateRepresentation($rep);
 
 if ($rep->validate()) {
-	$target = new Extool\Target\PlainOldMySQL();
+	$target = new Extool\Target\Joomla15();
 	$target->setRepresentation($rep);
 	$files = $target->generate();
 
