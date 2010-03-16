@@ -21,6 +21,7 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		// TODO: There's probably a better way than this
 		$this->generateMySQL();
 		$this->makeTableClasses();
+		$this->makeViews();
 
 		return $this->files;
 	}
@@ -69,5 +70,29 @@ class Joomla15 implements \Extool\Target\TargetInterface
 			$tableFile->setContents($fileSnip);
 			$this->files->addFile("admin/tables/{$table_name}.php", $tableFile);
 		}	
+	}
+
+	private function makeViews()
+	{
+		foreach ($this->rep->public_views as $view) {
+			$codeView = new Joomla15\helpers\view($view, $this->rep->name);
+			$clean_view_name = strtolower(str_replace(' ', '_', $view->name));
+
+			$path = "site/views/" . $clean_view_name . '/view.html.php';
+			$this->files->addFile($path, $codeView->makeViewClass());
+
+			$path = "site/views/" . $clean_view_name . '/tmpl/default.php';
+			$this->files->addFile($path, $codeView->makeViewTmpl());
+		}
+
+		foreach ($this->rep->admin_views as $view) {
+			$codeView = new Joomla15\helpers\view($view, $this->rep->name, true);
+
+			$path = "admin/views/" . $clean_view_name . '/view.html.php';
+			$this->files->addFile($path, $codeView->makeViewClass());
+
+			$path = "admin/views/" . $clean_view_name . '/tmpl/default.php';
+			$this->files->addFile($path, $codeView->makeViewTmpl());
+		}
 	}
 }

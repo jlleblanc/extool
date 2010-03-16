@@ -1,6 +1,7 @@
 <?php
+namespace Extool\Target;
 
-class Joomla15View
+class View
 {
 	private $component;
 	private $view;
@@ -14,15 +15,11 @@ class Joomla15View
 	private $dataType;
 	private $listViews;
 	
-	function __construct($view, $tables, $admin = false)
+	function __construct($view, $component, $admin = false)
 	{
 		$this->view = $view;
-		$this->tables = $tables;
 		$this->admin = $admin;
-		
-		$extool = Extool::getInstance();
-		$plan = $extool->getPlan();
-		$this->component = $plan->project;
+		$this->component = $component;
 		
 		$this->viewDir = strtolower(str_replace(' ', '', $view));
 		$this->viewClass = ucfirst($this->viewDir);
@@ -70,11 +67,6 @@ class Joomla15View
 		
 		
 		return false;
-	}
-	
-	public function __get($key)
-	{
-		return $this->$key;
 	}
 	
 	private function makeAdminListTmpl()
