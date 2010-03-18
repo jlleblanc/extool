@@ -74,8 +74,10 @@ class Joomla15 implements \Extool\Target\TargetInterface
 
 	private function makeViews()
 	{
+		include 'helpers/view.inc';
+
 		foreach ($this->rep->public_views as $view) {
-			$codeView = new Joomla15\helpers\view($view, $this->rep->name);
+			$codeView = new Joomla15View($view, $this->rep);
 			$clean_view_name = strtolower(str_replace(' ', '_', $view->name));
 
 			$path = "site/views/" . $clean_view_name . '/view.html.php';
@@ -86,7 +88,8 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		}
 
 		foreach ($this->rep->admin_views as $view) {
-			$codeView = new Joomla15\helpers\view($view, $this->rep->name, true);
+			$codeView = new Joomla15View($view, $this->rep, true);
+			$clean_view_name = strtolower(str_replace(' ', '_', $view->name));
 
 			$path = "admin/views/" . $clean_view_name . '/view.html.php';
 			$this->files->addFile($path, $codeView->makeViewClass());
