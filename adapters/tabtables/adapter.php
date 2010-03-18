@@ -79,11 +79,11 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 
 				$type = 'text';
 
-				if (preg_match('/[_ ]id$/Ui', $line)) {
+				if (preg_match('/[_ ]id$/Ui', $field_name)) {
 					$type = 'integer';
 				} 
 
-				$this->table_fields[$current_table]->addField($line, $type);
+				$this->table_fields[$current_table]->addField($field_name, $type);
 			} else if ($line != "") {
 				$current_table = trim($line);
 				$this->table_fields[$current_table] = new \Extool\Representation\Fields();
