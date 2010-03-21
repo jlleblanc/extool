@@ -80,18 +80,41 @@ class FilePackage
 	{
 		foreach ($files as $name => $file) {
 			if (is_array($file)) {
-				$path[] = $name;
-				$this->writeFilesRecursively($file, $path);
+				// must pass in a new array instead of appending directly to
+				// $path, otherwise, errorneous paths will be generated
+				$next = array_merge($path, array($name));
+				$this->writeFilesRecursively($file, $next);
 			} else {
 				$directory = $this->fileroot . '/' . implode('/', $path);
 
 				if (!is_dir($directory)) {
-					mkdir($directory);
+					$this->makeDirectories($path);
 				}
 
 				$fullpath = $directory . '/' . $name;
 
 				file_put_contents($fullpath, $file);
+			}
+		}
+	}
+
+	/**
+	 * Given an array of path segments, this function will create the
+	 * necessary directories one at a time.
+	 *
+	 * @param array $directories 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	private function makeDirectories($directories)
+	{
+		$path = $this->fileroot;
+
+		foreach ($directories as $dir) {
+			$path .= '/' . $dir;
+
+			if (!is_dir($path)) {
+				mkdir($path);
 			}
 		}
 	}
