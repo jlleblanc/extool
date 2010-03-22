@@ -107,7 +107,6 @@ class Snippet
 		$string = $this->contents;
 
 		foreach ($this->fields as $field => $snips) {
-
 			$spacing = '';
 			// disappointed that I can't seem to correctly match whitespace
 			// at the beginning of a line
@@ -119,12 +118,31 @@ class Snippet
 			$replacement = '';
 
 			// Also add tabbing here
-			$replacement .= implode("\n{$spacing}", $snips);
+			$replacement .= implode("\n{$spacing}", $this->snippetArrayToLines($snips));
 
 			$string = str_replace('{{' . $field . '}}', $replacement, $string);
 		}
 
 		return $string;
+	}
+
+	/**
+	 * Returns an array of strings given an array of Snippet objects
+	 *
+	 * @param array $snips 
+	 * @return array
+	 * @author Joseph LeBlanc
+	 */
+	private function snippetArrayToLines($snips)
+	{
+		$lines = array();
+
+		foreach ($snips as $snip) {
+			$snip = explode("\n", $snip);
+			$lines = array_merge($lines, $snip);
+		}
+
+		return $lines;
 	}
 
 	/**
