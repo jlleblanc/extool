@@ -177,11 +177,13 @@ class Joomla15View
 
 			$field = $this->snippets->getSnippet('listfront_tmpl_field');
 
+			$field_name = strtolower($fieldValue['name']);
+
 			if ($first) {
-				$field->assign('field', "<a href=\"<?php echo \$link; ?>\"><?php echo \$row->{$fieldValue} ?></a>");
+				$field->assign('field', "<a href=\"<?php echo \$link; ?>\"><?php echo \$row->{$field_name} ?></a>");
 				$first = false;
 			} else {
-				$field->assign('field', "<?php echo \$row->{$fieldValue} ?>");
+				$field->assign('field', "<?php echo \$row->{$field_name} ?>");
 			}
 
 			$tmplSnip->add('fields', $field);
