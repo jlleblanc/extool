@@ -38,6 +38,7 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 			$model->addTable($table);
 
 			$view = new \Extool\Representation\View($table_name . ' List');
+			$view->setType('list');
 			$view->setFields($fields);
 			$rep->addPublicView($view);
 			$rep->addPublicModel($model);
