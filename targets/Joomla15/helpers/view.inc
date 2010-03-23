@@ -48,10 +48,6 @@ class Joomla15View
 		}
 
 		$this->tableNames = array_keys($this->tables);
-
-		foreach ($this->listViews as &$view) {
-			$view = str_replace('_', '', $view);
-		}
 	}
 	
 	public function makeViewClass()
