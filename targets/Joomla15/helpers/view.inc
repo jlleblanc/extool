@@ -47,7 +47,12 @@ class Joomla15View
 			$this->tables = $this->rep->public_models[$view->name]->tables;
 		}
 
-		$this->tableNames = array_keys($this->tables);
+		$this->tableNames = array();
+
+		// build table names from array
+		foreach ($this->tables as $table) {
+			$this->tableNames[] = $table->system_name;
+		}
 	}
 	
 	public function makeViewClass()

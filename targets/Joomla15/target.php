@@ -161,12 +161,13 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		$modelSnip->assign('model', ucfirst($modelName));
 
 		foreach ($model->tables as $table) {
-			$modelSnip->add('dataVariables', "private $" . $table->name . ';');
+			$modelSnip->add('dataVariables', "private $" . $table->system_name . ';');
 
 			$model_function = $this->snippets->getSnippet('model_function');
-			$model_function->assign('tableName', $table->name);
-			$model_function->assign('tableCapsName', ucfirst($table->name));
-			$model_function->assign('query', ' ');
+			$model_function->assign('tableName', $table->system_name);
+			$model_function->assign('tableCapsName', ucfirst($table->system_name));
+			$query = 'SELECT ' . implode(', ', $table->fields->names) . ' FROM #__' . $table->system_name;
+			$model_function->assign('query', $query);
 
 			$modelSnip->add('dataFunctions', $model_function);
 		}
