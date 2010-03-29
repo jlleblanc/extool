@@ -116,6 +116,8 @@ class View
 			} else {
 				throw new \Exception("No Key Defined");
 			}
+		} else if ($name == 'system_name') {
+			return str_replace(' ', '_', strtolower($this->name));
 		}
 
 		return $this->$name;

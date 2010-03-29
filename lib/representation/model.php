@@ -81,6 +81,10 @@ class Model
 	 */
 	public function __get($name)
 	{
+		if ($name == 'system_name') {
+			return str_replace(' ', '_', strtolower($this->name));
+		}
+
 		return $this->$name;
 	}
 }
