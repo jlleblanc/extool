@@ -22,6 +22,10 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		$this->generateMySQL();
 		$this->makeTableClasses();
 		$this->makeViews();
+		$this->makeFrontController();
+		$this->makeAdminControllers();
+		$this->makeMainFiles();
+		$this->makeModels();
 
 		return $this->files;
 	}
@@ -74,7 +78,7 @@ class Joomla15 implements \Extool\Target\TargetInterface
 
 	private function makeViews()
 	{
-		include 'helpers/view.inc';
+		include_once 'helpers/view.inc';
 
 		foreach ($this->rep->public_views as $view) {
 			$codeView = new Joomla15View($view, $this->rep);
@@ -97,5 +101,122 @@ class Joomla15 implements \Extool\Target\TargetInterface
 			$path = "admin/views/" . $clean_view_name . '/tmpl/default.php';
 			$this->files->addFile($path, $codeView->makeViewTmpl());
 		}
+	}
+
+	private function makeFrontController()
+	{
+		include_once 'helpers/controller.inc';
+
+		$default_view = null;
+		foreach ($this->rep->public_views as $view) {
+			if ($view->type == 'list' && $default_view == null) {
+				$default_view = $view;
+			}
+		}
+
+		$controller = new Joomla15Controller($this->rep, $default_view);
+
+		$fileSnip = $this->snippets->getSnippet('code');
+		$fileSnip->assign('code', $controller->makeControllerCode());
+
+		$this->files->addFile("site/controller.php", $fileSnip);
+	}
+
+	private function makeAdminControllers()
+	{
+		include_once 'helpers/controller.inc';
+		
+		foreach ($this->rep->admin_views as $view) {
+			if ($view->type == 'list') {
+				$view_name = str_replace(array(' ', '_'), '', ucwords($view->name));
+				$controller = new Joomla15Controller($this->rep, $view, true);
+
+				$fileSnip = $this->snippets->getSnippet('code');
+				$fileSnip->assign('code', $controller->makeControllerCode());
+
+				$filename = 'admin/controllers/' . strtolower($view_name) . '.php';
+				$this->files->addFile($filename, $fileSnip);
+			}
+		}
+	}
+
+	private function makeModels()
+	{
+		foreach ($this->rep->public_models as $model) {
+			$this->makeModelFiles($model);
+		}
+		
+		foreach ($this->rep->admin_models as $model) {
+			$this->makeModelFiles($model, true);
+		}
+	}
+
+	private function makeModelFiles($model, $admin = false)
+	{
+		$component = $this->rep->name;
+		$modelName = str_replace(' ', '_', strtolower($model->name));
+
+		$modelSnip = $this->snippets->getSnippet('model');
+		$modelSnip->assign('component', ucfirst($component));
+		$modelSnip->assign('model', ucfirst($modelName));
+
+		foreach ($model->tables as $table) {
+			$modelSnip->add('dataVariables', "private $" . $table->name . ';');
+
+			$model_function = $this->snippets->getSnippet('model_function');
+			$model_function->assign('tableName', $table->name);
+			$model_function->assign('tableCapsName', ucfirst($table->name));
+			$model_function->assign('query', ' ');
+
+			$modelSnip->add('dataFunctions', $model_function);
+		}
+
+		$fileSnip = $this->snippets->getSnippet('code');
+		$fileSnip->assign('code', $modelSnip);
+
+		if ($admin) {
+			$folder = 'admin';
+		} else {
+			$folder = 'site';
+		}
+
+		$this->files->addFile($folder . "/models/{$modelName}.php", $fileSnip);
+	}
+
+
+	private function makeMainFiles()
+	{	
+		// Frontend main file
+		$mainSnip = $this->snippets->getSnippet('main');
+		$mainSnip->assign('component', ucfirst($this->rep->name));
+
+		$fileSnip = $this->snippets->getSnippet('code');
+		$fileSnip->assign('code', $mainSnip);
+
+		$this->files->addFile("site/{$this->rep->name}.php", $fileSnip);
+
+		// Backend main file
+		$mainSnip = $this->snippets->getSnippet('main_admin');
+		$mainSnip->assign('component', ucfirst($this->rep->name));
+
+		$first = true;
+		foreach ($this->rep->admin_views as $view) {
+			$view_name = str_replace('_', '', $view->name);
+			$caseSnip = $this->snippets->getSnippet('main_admin_case');
+			$caseSnip->assign('controller', $view_name);
+			$mainSnip->add('cases', $caseSnip);
+
+			if ($first) {
+				$defaultController = $view_name;
+				$first = false;
+			}
+		}
+
+		$mainSnip->assign('defaultcontroller', $defaultController);
+
+		$fileSnip = $this->snippets->getSnippet('code');
+		$fileSnip->assign('code', $mainSnip);
+
+		$this->files->addFile("admin/{$this->rep->name}.php", $fileSnip);
 	}
 }
