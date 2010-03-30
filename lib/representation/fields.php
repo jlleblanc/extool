@@ -130,7 +130,7 @@ class Fields implements \Iterator
 	public function getSystemName($label)
 	{
 		$name = str_replace(' ', '_', $label);
-		return preg_replace('/[^A-Za-z_0-9]/', '', $name);
+		return strtolower(preg_replace('/[^A-Za-z_0-9]/', '', $name));
 	}
 
 	/**
