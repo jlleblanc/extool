@@ -128,7 +128,7 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		
 		foreach ($this->rep->admin_views as $view) {
 			if ($view->type == 'list') {
-				$view_name = str_replace(array(' ', '_'), '', ucwords($view->name));
+				$view_name = ucwords($view->system_name);
 				$controller = new Joomla15Controller($this->rep, $view, true);
 
 				$fileSnip = $this->snippets->getSnippet('code');
@@ -202,14 +202,15 @@ class Joomla15 implements \Extool\Target\TargetInterface
 
 		$first = true;
 		foreach ($this->rep->admin_views as $view) {
-			$view_name = str_replace('_', '', $view->name);
-			$caseSnip = $this->snippets->getSnippet('main_admin_case');
-			$caseSnip->assign('controller', $view_name);
-			$mainSnip->add('cases', $caseSnip);
+			if ($view->type == 'list') {
+				$caseSnip = $this->snippets->getSnippet('main_admin_case');
+				$caseSnip->assign('controller', $view->system_name);
+				$mainSnip->add('cases', $caseSnip);
 
-			if ($first) {
-				$defaultController = $view_name;
-				$first = false;
+				if ($first) {
+					$defaultController = $view->system_name;
+					$first = false;
+				}
 			}
 		}
 
