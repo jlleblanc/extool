@@ -18,7 +18,9 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		$this->snippets->setBasePath('targets/Joomla15/snip');
 		$this->files = new \Extool\Helpers\FilePackage();
 
-		// TODO: There's probably a better way than this
+		// TODO: There's probably a better way than this. I'm sure there's 
+		// some ideal design pattern floating around out there that my
+		// architecturally impoverished mind hasn't been exposed to.
 		$this->generateMySQL();
 		$this->makeTableClasses();
 		$this->makeViews();
