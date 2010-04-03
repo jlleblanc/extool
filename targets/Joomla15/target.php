@@ -125,11 +125,16 @@ class Joomla15 implements \Extool\Target\TargetInterface
 	private function makeAdminControllers()
 	{
 		include_once 'helpers/controller.inc';
-		
-		foreach ($this->rep->admin_views as $view) {
+
+		foreach ($this->rep->admin_views as $viewkey => $view) {
+			// This code is an ugly kluge to get the name of the first table
+			// in the model with the same name as the view
+			$model = $this->rep->admin_models[$viewkey];
+			$table_record_names = array_keys($model->tables);
+
 			if ($view->type == 'list') {
 				$view_name = ucwords($view->system_name);
-				$controller = new Joomla15Controller($this->rep, $view, true);
+				$controller = new Joomla15Controller($this->rep, $view, true, $table_record_names[0]);
 
 				$fileSnip = $this->snippets->getSnippet('code');
 				$fileSnip->assign('code', $controller->makeControllerCode());
@@ -170,6 +175,13 @@ class Joomla15 implements \Extool\Target\TargetInterface
 			$model_function->assign('query', $query);
 
 			$modelSnip->add('dataFunctions', $model_function);
+
+			if ($admin) {
+				$modelSaveFunc = $this->snippets->getSnippet('model_save_function');
+				$modelSaveFunc->assign('table', $table->system_name);
+
+				$modelSnip->add('dataFunctions', $modelSaveFunc);
+			}
 		}
 
 		$fileSnip = $this->snippets->getSnippet('code');
@@ -186,7 +198,7 @@ class Joomla15 implements \Extool\Target\TargetInterface
 
 
 	private function makeMainFiles()
-	{	
+	{
 		// Frontend main file
 		$mainSnip = $this->snippets->getSnippet('main');
 		$mainSnip->assign('component', ucfirst($this->rep->name));

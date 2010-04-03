@@ -46,23 +46,27 @@ class Joomla15Controller
 		if (!$this->admin) {
 			return '';
 		}
-		
+
 		$funSnip = $this->snippets->getSnippet('controller_functions');
 		$funSnip->assign('component', $this->component);
-		
+
 		if ($this->component == $this->table) {
 			$table = $this->table;
 		} else {
 			$table = $this->component . '_' . $this->table;
 		}
-		
+
 		$funSnip->assign('table', $table);
 		$funSnip->assign('tablename', ucfirst(str_replace('_', ' ', $this->table)));
 		$funSnip->assign('controller_name', $this->defaultView);
-		
+
+		// Yes, we're using the default view name here, as view and model names
+		// should match.
+		$funSnip->assign('modelName', $this->defaultView);
+
 		$addView = preg_replace('/_?list/i', '', $this->defaultView);
 		$funSnip->assign('add_view', $addView);
-		
+
 		return $funSnip;
 	}
 }

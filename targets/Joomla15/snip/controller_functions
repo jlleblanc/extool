@@ -16,19 +16,8 @@ public function save()
 
 	$post = JRequest::get( 'post' );
 
-	$row =& JTable::getInstance('{{table}}', 'Table');
-
-	if (!$row->bind( $post )) {
-		return JError::raiseWarning( 500, $row->getError() );
-	}
-
-	if (!$row->check()) {
-		return JError::raiseWarning( 500, $row->getError() );
-	}
-
-	if (!$row->store()) {
-		return JError::raiseWarning( 500, $row->getError() );
-	}
+	$model = $this->getModel('{{modelName}}');
+	$model->save($post);
 
 	$this->setRedirect( 'index.php?option=com_{{component}}&controller={{controller_name}}', '{{tablename}} Saved' );
 }

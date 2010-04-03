@@ -1,0 +1,18 @@
+function save($post)
+{
+	$row =& JTable::getInstance('{{table}}', 'Table');
+
+	if (!$row->bind( $post )) {
+		return JError::raiseWarning( 500, $row->getError() );
+	}
+
+	if (!$row->check()) {
+		return JError::raiseWarning( 500, $row->getError() );
+	}
+
+	if (!$row->store()) {
+		return JError::raiseWarning( 500, $row->getError() );
+	}
+
+	return true;
+}
