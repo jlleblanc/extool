@@ -1,21 +1,8 @@
 <?php
 
-function __autoload($classname)
-{
-	$segments = explode('\\', $classname);
+define('EXTOOL_BASE', __DIR__);
 
-	// remove Extool from the segments
-	array_shift($segments);
-	$file = implode('/', $segments);
-
-	$path = 'lib/' . $file . '.php';
-
-	// I really don't like this logic at all. Need to find a better way of 
-	// bringing individual targets and adapters into the mix.
-	if (file_exists($path)) {
-		require_once $path;
-	}
-}
+include 'include/autoload.php';
 
 $factory = new Extool\Factory();
 
