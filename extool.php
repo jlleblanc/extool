@@ -18,6 +18,6 @@ if ($rep->validate()) {
 	$target->setRepresentation($rep);
 	$files = $target->generate();
 
-	$files->setRoot('/Users/josephleblanc/Desktop');
+	$files->setRoot('/Users/josephleblanc/Desktop/lecomponent');
 	$files->writeAll();
 }

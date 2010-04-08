@@ -28,6 +28,7 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		$this->makeAdminControllers();
 		$this->makeMainFiles();
 		$this->makeModels();
+		// $this->makeManifest();
 
 		return $this->files;
 	}
@@ -234,5 +235,37 @@ class Joomla15 implements \Extool\Target\TargetInterface
 		$fileSnip->assign('code', $mainSnip);
 
 		$this->files->addFile("admin/{$this->rep->name}.php", $fileSnip);
+	}
+
+	public function makeManifest()
+	{
+		$extool = Extool::getInstance();
+		$plan = $extool->getPlan();
+
+		$xmlSnip = new Snippet('xml');
+
+		$xmlSnip->assign('component', $plan->project);
+		$xmlSnip->assign('name', $plan->name);
+		$xmlSnip->assign('license', $plan->license);
+		$xmlSnip->assign('version', $plan->version);
+		$xmlSnip->assign('description', $plan->description);
+		$xmlSnip->assign('date', date('m/d/y'));
+		$xmlSnip->assign('author', ExtoolConfig::$name);
+		$xmlSnip->assign('email', ExtoolConfig::$email);
+		$xmlSnip->assign('copyright', '© ' . date('Y'));
+
+		$submenuItems = array();
+
+		foreach ($plan->listViews['admin'] as $view => $value) {
+			$snip = new Snippet('xml_submenu_items');
+			$snip->assign('component', 'com_' . $plan->project);
+			$snip->assign('title', ucwords(str_replace('_', ' ', $view)));
+			$snip->assign('view', str_replace('_', '', $view));
+			$submenuItems[] = $snip;
+		}
+
+		$xmlSnip->assign('submenu_items', $submenuItems, "\n");
+
+		$this->assignSnippet($xmlSnip, $plan->project . '.xml', '/');
 	}
 }
