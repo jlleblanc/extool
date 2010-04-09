@@ -20,7 +20,8 @@ interface TargetInterface
 	public function getConfiguration();
 
 	/**
-	 * undocumented function
+	 * Sets the configuration object after it has been decorated by the
+	 * application.
 	 *
 	 * @param Configuration $configuration 
 	 * @return void
