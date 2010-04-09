@@ -11,6 +11,24 @@ namespace Extool\Target;
 interface TargetInterface 
 {
 	/**
+	 * Returns a Configuration object outlining any data required by the 
+	 * target.
+	 *
+	 * @return Configuration
+	 * @author Joseph LeBlanc
+	 */
+	public function getConfiguration();
+
+	/**
+	 * undocumented function
+	 *
+	 * @param Configuration $configuration 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function setConfiguration(Configuration $configuration);
+
+	/**
 	 * Receives a Representation object so it can be set in the target for 
 	 * further use.
 	 *

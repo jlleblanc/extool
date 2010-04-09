@@ -7,6 +7,16 @@ class Joomla15 implements \Extool\Target\TargetInterface
 	private $files;
 	private $snippets;
 
+	function getConfiguration()
+	{
+		
+	}
+
+	public function setConfiguration(Configuration $configuration)
+	{
+		
+	}
+
 	public function setRepresentation(\Extool\Representation\Representation $representation)
 	{
 		$this->rep = $representation;

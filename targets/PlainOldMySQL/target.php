@@ -5,6 +5,16 @@ class PlainOldMySQL implements \Extool\Target\TargetInterface
 {
 	private $rep;
 
+	function getConfiguration()
+	{
+		
+	}
+
+	public function setConfiguration(Configuration $configuration)
+	{
+		
+	}
+
 	public function setRepresentation(\Extool\Representation\Representation $representation)
 	{
 		$this->rep = $representation;
