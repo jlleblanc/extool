@@ -10,7 +10,7 @@ namespace Extool\Representation;
  * @package default
  * @author Joseph LeBlanc
  */
-class Fields implements \Iterator
+class Fields implements \Iterator, \ArrayAccess
 {
 	/**
 	 * System friendly names, keyed by human friendly label
@@ -207,5 +207,58 @@ class Fields implements \Iterator
 	public function valid()
 	{
 		return $this->current() !== false;
+	}
+
+	/**
+	 * ArrayAccess function
+	 *
+	 * @param string $offset 
+	 * @return boolean
+	 * @author Joseph LeBlanc
+	 */
+	public function offsetExists($offset)
+	{
+		return in_array($offset, $this->names);
+	}
+
+	/**
+	 * ArrayAccess function
+	 *
+	 * @param string $offset 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function offsetUnset($offset)
+	{
+		$this->removeField($offset);
+	}
+
+	/**
+	 * ArrayAccess function
+	 *
+	 * @param string $offset 
+	 * @return mixed
+	 * @author Joseph LeBlanc
+	 */
+	public function offsetGet($offset)
+	{
+		if (in_array($offset, $this->names)) {
+			return $this->types[$offset];
+		}
+
+		return null;
+	}
+
+	/**
+	 * ArrayAccess function
+	 *
+	 * @param string $offset 
+	 * @param mixed $value 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
+	public function offsetSet($offset, $value)
+	{
+		$this->addField($offset, $value);
 	}
 }
