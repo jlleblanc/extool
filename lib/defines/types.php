@@ -117,4 +117,17 @@ class Types
 	{
 		return array_keys($this->valid_types);
 	}
+
+	/**
+	 * Returns true if the data given matches the type specified.
+	 *
+	 * @param mixed $data 
+	 * @param string $type 
+	 * @return boolean
+	 * @author Joseph LeBlanc
+	 */
+	public function validateData($data, $type)
+	{
+		return call_user_func($this->valid_types[$type], $data);
+	}
 }
