@@ -1,7 +1,7 @@
 <?php
 namespace Extool\Target;
 
-class PlainOldMySQL implements \Extool\Target\TargetInterface
+class PlainOldMySQL implements TargetInterface
 {
 	private $rep;
 

@@ -1,7 +1,7 @@
 <?php
 namespace Extool\Target;
 
-class Joomla15 implements \Extool\Target\TargetInterface
+class Joomla15 implements TargetInterface
 {
 	private $rep;
 	private $files;
