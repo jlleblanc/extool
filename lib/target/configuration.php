@@ -1,5 +1,5 @@
 <?php
-namespace Extool\Target
+namespace Extool\Target;
 
 abstract class Configuration
 {

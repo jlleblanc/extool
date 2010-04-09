@@ -1,5 +1,5 @@
 <?php
-namespace Extool\Defines
+namespace Extool\Defines;
 
 /**
  * A class for defining and determining variable types.
