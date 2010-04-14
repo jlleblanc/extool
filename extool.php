@@ -6,15 +6,15 @@ include 'include/autoload.php';
 
 $factory = new Extool\Factory();
 
-$adapter = $factory->getAdapter('TabTables');
-$adapter->setResource('plans/recipes');
+$adapter = $factory->getAdapter('AddTheAdapterNameHere');
+$adapter->setResource('plans/recipes'); // Replace with the plan you wish to use
 
 $rep = new Extool\Representation\Representation();
 
 $adapter->decorateRepresentation($rep);
 
 if ($rep->validate()) {
-	$target = $factory->getTarget('Joomla15');
+	$target = $factory->getTarget('AddTheTargetNameHere');
 	$target->setRepresentation($rep);
 	$config = $target->getConfiguration();
 	$config->author = 'Joseph LeBlanc';
@@ -28,6 +28,6 @@ if ($rep->validate()) {
 	$target->setConfiguration($config);
 	$files = $target->generate();
 
-	$files->setRoot('/Users/josephleblanc/Desktop/lecomponent');
+	$files->setRoot('/add/your/base/path/here');
 	$files->writeAll();
 }
