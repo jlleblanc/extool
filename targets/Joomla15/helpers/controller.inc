@@ -53,7 +53,7 @@ class Joomla15Controller
 		if ($this->component == $this->table) {
 			$table = $this->table;
 		} else {
-			$table = $this->component . '_' . $this->table;
+			$table = $this->component . '_' . strtolower(str_replace(' ', '_', $this->table));
 		}
 
 		$funSnip->assign('table', $table);

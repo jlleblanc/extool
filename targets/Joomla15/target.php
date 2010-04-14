@@ -6,15 +6,42 @@ class Joomla15 implements TargetInterface
 	private $rep;
 	private $files;
 	private $snippets;
+	private $config;
 
 	function getConfiguration()
 	{
-		
+		if (!isset($this->config)) {
+			$fieldset = array(
+				'component' => 'text',
+				'name' => 'text',
+				'license' => 'text',
+				'version' => 'text',
+				'description' => 'text',
+				'date' => 'date',
+				'author' => 'text',
+				'email' => 'email',
+				'copyright' => 'text'
+			);
+
+			$fields = new \Extool\Representation\Fields($fieldset);
+
+			$this->config = new Configuration($fields);
+		}
+
+		return $this->config;
 	}
 
 	public function setConfiguration(Configuration $configuration)
 	{
-		
+		if (!$this->config) {
+			$this->getConfiguration();
+		}
+
+		if ($configuration->fields != $this->config->fields) {
+			throw new \Exception("Configuration fields do not match the given ones");
+		}
+
+		$this->config = $configuration;
 	}
 
 	public function setRepresentation(\Extool\Representation\Representation $representation)
