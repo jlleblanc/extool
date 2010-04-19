@@ -13,6 +13,7 @@ class Joomla15 implements TargetInterface
 		if (!isset($this->config)) {
 			$fieldset = array(
 				'component' => 'text',
+				'project' => 'text',
 				'name' => 'text',
 				'license' => 'text',
 				'version' => 'text',
@@ -65,7 +66,7 @@ class Joomla15 implements TargetInterface
 		$this->makeAdminControllers();
 		$this->makeMainFiles();
 		$this->makeModels();
-		// $this->makeManifest();
+		$this->makeManifest();
 
 		return $this->files;
 	}
@@ -276,33 +277,28 @@ class Joomla15 implements TargetInterface
 
 	public function makeManifest()
 	{
-		$extool = Extool::getInstance();
-		$plan = $extool->getPlan();
+		$config = $this->getConfiguration();
 
-		$xmlSnip = new Snippet('xml');
+		$xmlSnip = $this->snippets->getSnippet('xml');
 
-		$xmlSnip->assign('component', $plan->project);
-		$xmlSnip->assign('name', $plan->name);
-		$xmlSnip->assign('license', $plan->license);
-		$xmlSnip->assign('version', $plan->version);
-		$xmlSnip->assign('description', $plan->description);
+		$xmlSnip->assign('component', $config->project);
+		$xmlSnip->assign('name', $config->name);
+		$xmlSnip->assign('license', $config->license);
+		$xmlSnip->assign('version', $config->version);
+		$xmlSnip->assign('description', $config->description);
 		$xmlSnip->assign('date', date('m/d/y'));
-		$xmlSnip->assign('author', ExtoolConfig::$name);
-		$xmlSnip->assign('email', ExtoolConfig::$email);
+		$xmlSnip->assign('author', $config->author);
+		$xmlSnip->assign('email', $config->email);
 		$xmlSnip->assign('copyright', '© ' . date('Y'));
 
-		$submenuItems = array();
-
-		foreach ($plan->listViews['admin'] as $view => $value) {
-			$snip = new Snippet('xml_submenu_items');
-			$snip->assign('component', 'com_' . $plan->project);
-			$snip->assign('title', ucwords(str_replace('_', ' ', $view)));
-			$snip->assign('view', str_replace('_', '', $view));
-			$submenuItems[] = $snip;
+		foreach ($this->rep->admin_views as $view) {
+			$snip = $this->snippets->getSnippet('xml_submenu_items');
+			$snip->assign('component', 'com_' . $config->project);
+			$snip->assign('title', ucwords($view->name));
+			$snip->assign('view', $view->system_name);
+			$xmlSnip->add('submenu_items', $snip);
 		}
 
-		$xmlSnip->assign('submenu_items', $submenuItems, "\n");
-
-		$this->assignSnippet($xmlSnip, $plan->project . '.xml', '/');
+		$this->files->addFile($config->project . '.xml', $xmlSnip);
 	}
 }
