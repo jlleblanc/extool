@@ -35,7 +35,9 @@ class Configuration
 
 	public function __get($name)
 	{
-		if (isset($this->fields[$name])) {
+		if ($name == 'fields') {
+			return $this->fields;
+		} else if (isset($this->fields[$name])) {
 			return $this->values[$name];
 		} else {
 			throw new \Exception("Attempting to get undefined field from configuration");
