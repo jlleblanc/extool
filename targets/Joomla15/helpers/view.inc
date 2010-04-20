@@ -28,7 +28,7 @@ class Joomla15View
 		$this->snippets = new \Extool\Helpers\SnippetFactory();
 		$this->snippets->setBasePath('targets/Joomla15/snip');
 
-		$this->viewDir = strtolower(str_replace(' ', '', $view->name));
+		$this->viewDir = $view->system_name;
 		$this->viewClass = ucfirst($this->viewDir);
 		
 		if ($admin) {
