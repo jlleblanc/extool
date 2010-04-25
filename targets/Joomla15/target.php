@@ -101,6 +101,7 @@ class Joomla15 implements TargetInterface
 			$tableSnip = $this->snippets->getSnippet('table');
 			$tableSnip->assign('table_name', $table_name);
 			$tableSnip->assign('table_uc_name', ucfirst($table_name));
+			$tableSnip->assign('table_key', $table->key);
 
 			foreach ($table->fields as $field) {
 				$field_snip = $this->snippets->getSnippet('table_field');
@@ -292,11 +293,13 @@ class Joomla15 implements TargetInterface
 		$xmlSnip->assign('copyright', '© ' . date('Y'));
 
 		foreach ($this->rep->admin_views as $view) {
-			$snip = $this->snippets->getSnippet('xml_submenu_items');
-			$snip->assign('component', 'com_' . $config->project);
-			$snip->assign('title', ucwords($view->name));
-			$snip->assign('view', $view->system_name);
-			$xmlSnip->add('submenu_items', $snip);
+			if ($view->type == 'list') {
+				$snip = $this->snippets->getSnippet('xml_submenu_items');
+				$snip->assign('component', 'com_' . $config->project);
+				$snip->assign('title', ucwords($view->name));
+				$snip->assign('view', $view->system_name);
+				$xmlSnip->add('submenu_items', $snip);
+			}
 		}
 
 		$this->files->addFile($config->project . '.xml', $xmlSnip);
