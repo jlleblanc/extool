@@ -125,21 +125,20 @@ class Joomla15View
 	}
 	
 	private function makeAdminEditTmpl()
-	{		
-		foreach ($this->getTableFields() as $fieldTitle => $field) {
-			$colSnip = $this->snippets->getSnippet('editadmin_tmpl_row');
-			$colSnip->assign('fieldTitle', ucfirst($fieldTitle));
-			$colSnip->assign('fieldName', $field['name']);
-			$fields[] = $colSnip;
-		}
-		
+	{
 		$tmplSnip = $this->snippets->getSnippet('editadmin_tmpl');
 		
 		$tmplSnip->assign('friendlyViewName', $this->view->name);
 		$tmplSnip->assign('controller', $this->getDefaultController());
 
-		foreach ($fields as $field) {
-			$tmplSnip->add('fields', $field);
+		$table = $this->getPrimaryTable();
+		$tmplSnip->assign('table_key', $table->key);
+
+		foreach ($this->getTableFields() as $fieldTitle => $field) {
+			$colSnip = $this->snippets->getSnippet('editadmin_tmpl_row');
+			$colSnip->assign('fieldTitle', ucfirst($fieldTitle));
+			$colSnip->assign('fieldName', $field['name']);
+			$tmplSnip->add('fields', $colSnip);
 		}
 		
 		return $tmplSnip;
@@ -274,20 +273,19 @@ class Joomla15View
 	// fields are specified in the view
 	private function getTableFields()
 	{		
+		$primary = $this->getPrimaryTable();
+
+		return $primary->fields;
+	}
+
+	private function getPrimaryTable()
+	{
 		$tableNames = array_keys($this->tables);
 		$tableName = $tableNames[0];
-		
 
-		return $this->tables[$tableName]->fields;
-
-		// $fields = array();
-		// 
-		// foreach ($this->tables[$tableName] as $field) {
-		// 	$field = ucfirst($field);
-		// 	$fields[$field] = strtolower(str_replace(' ', '_', $field));
-		// }
+		return $this->tables[$tableName];
 	}
-	
+
 	private function getDefaultController()
 	{
 		$controller = $this->viewDir;
