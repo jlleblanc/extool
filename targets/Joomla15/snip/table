@@ -1,10 +1,9 @@
 class Table{{table_uc_name}} extends JTable
 {
-	var $id = null;
 	{{variables}}
 	
 	function __construct(&$db)
 	{
-		parent::__construct('#__{{table_name}}', 'id', $db);
+		parent::__construct('#__{{table_name}}', '{{table_key}}', $db);
 	}
 }
