@@ -34,14 +34,14 @@ class Joomla15View
 		if ($admin) {
 			foreach ($rep->admin_views as $view) {
 				if ($view->type == 'list') {
-					$this->listViews[] = $view;
+					$this->listViews[] = $view->system_name;
 				}
 			}
 			$this->tables = $this->rep->admin_models[$view->name]->tables;
 		} else {
 			foreach ($rep->public_views as $view) {
 				if ($view->type == 'list') {
-					$this->listViews[] = $view;
+					$this->listViews[] = $view->system_name;
 				}
 			}
 			$this->tables = $this->rep->public_models[$view->name]->tables;
@@ -290,9 +290,9 @@ class Joomla15View
 	{
 		$controller = $this->viewDir;
 		
-		if (!preg_match('/list$/i', $controller)) {
-			if (in_array($controller . 'list', $this->listViews)) {	
-				$controller .= 'list';
+		if (!preg_match('/_list$/i', $controller)) {
+			if (in_array($controller . '_list', $this->listViews)) {
+				$controller .= '_list';
 			}
 		}
 		
