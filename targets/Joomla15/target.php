@@ -73,6 +73,7 @@ class Joomla15 implements TargetInterface
 
 	private function generateMySQL()
 	{
+		$component = $this->rep->name;
 		$install_file = new \Extool\Helpers\File();
 		$uninstall_file = new \Extool\Helpers\File();
 
@@ -80,7 +81,13 @@ class Joomla15 implements TargetInterface
 			$table->createDefaultKey();
 
 			$mysql = new \Extool\Helpers\MySQL($table);
-			$mysql->setName('#__' . $table->name);
+
+			if ($component == $table->system_name) {
+				$mysql->setName('#__' . $table->system_name);
+			} else {
+				$mysql->setName('#__' . $component . '_' . $table->system_name);
+			}
+
 			$install_file->appendContents($mysql->generateCreate() . "\n\n");
 			$uninstall_file->appendContents($mysql->generateDrop() . "\n");
 		}
@@ -208,19 +215,25 @@ class Joomla15 implements TargetInterface
 		$modelSnip->assign('model', ucfirst($modelName));
 
 		foreach ($model->tables as $table) {
+			if ($table->system_name == $component) {
+				$tableSQLName = $component;
+			} else {
+				$tableSQLName = $component . '_' . $table->system_name;
+			}
+
 			$modelSnip->add('dataVariables', "private $" . $table->system_name . ';');
 
 			$model_function = $this->snippets->getSnippet('model_function');
 			$model_function->assign('tableName', $table->system_name);
 			$model_function->assign('tableCapsName', ucfirst($table->system_name));
-			$query = 'SELECT ' . implode(', ', $table->fields->names) . ' FROM #__' . $table->system_name;
+			$query = 'SELECT ' . implode(', ', $table->fields->names) . ' FROM #__' . $tableSQLName;
 			$model_function->assign('query', $query);
 
 			$modelSnip->add('dataFunctions', $model_function);
 
 			if ($admin) {
 				$modelSaveFunc = $this->snippets->getSnippet('model_save_function');
-				$modelSaveFunc->assign('table', $table->system_name);
+				$modelSaveFunc->assign('table', $tableSQLName);
 
 				$modelSnip->add('dataFunctions', $modelSaveFunc);
 			}
