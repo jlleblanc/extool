@@ -26,8 +26,8 @@ JToolBarHelper::addNew();
 			{
 				$row = &$this->{{tablename}}[$i];
 
-				$link = 'index.php?option=' . $option . '&amp;view={{editviewname}}&amp;cid[]='. $row->id;
-				$checkbox = JHTML::_('grid.id', $i, $row->id );
+				$link = 'index.php?option=' . $option . '&amp;view={{editviewname}}&amp;cid[]='. $row->{{primary_key}};
+				$checkbox = JHTML::_('grid.id', $i, $row->{{primary_key}} );
 			?>
 			<tr class="<?php echo "row{$k}"; ?>">
 				<td>
