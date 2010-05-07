@@ -122,7 +122,7 @@ class Joomla15View
 		$friendly_table_name = preg_replace('/ List$/', '', $this->view->name);
 		$tmplSnip->assign('primary_key', $this->tables[$friendly_table_name]->fields->key);
 		$tmplSnip->assign('controller', $this->getDefaultController());
-		$tmplSnip->assign('editviewname', preg_replace('/list$/', '', $this->viewDir));
+		$tmplSnip->assign('editviewname', preg_replace('/_list$/', '', $this->viewDir));
 		
 		return $tmplSnip;
 	}
