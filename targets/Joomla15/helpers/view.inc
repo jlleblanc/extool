@@ -37,14 +37,14 @@ class Joomla15View
 					$this->listViews[] = $view->system_name;
 				}
 			}
-			$this->tables = $this->rep->admin_models[$view->name]->tables;
+			$this->tables = $this->rep->admin_models[$this->view->name]->tables;
 		} else {
 			foreach ($rep->public_views as $view) {
 				if ($view->type == 'list') {
 					$this->listViews[] = $view->system_name;
 				}
 			}
-			$this->tables = $this->rep->public_models[$view->name]->tables;
+			$this->tables = $this->rep->public_models[$this->view->name]->tables;
 		}
 
 		$this->tableNames = array();
