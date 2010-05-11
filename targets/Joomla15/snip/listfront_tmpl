@@ -7,7 +7,7 @@
 	</thead>
 	<tbody>
 	<?php foreach ($this->{{tablename}} as $row): ?>
-		<?php $link = JRoute::_('index.php?option=' . $option . '&amp;view={{singleviewname}}&amp;id='. $row->id); ?>
+		<?php $link = JRoute::_('index.php?option=' . $option . '&amp;view={{singleviewname}}&amp;id='. $row->{{primary_key}}); ?>
 		<tr>
 			{{fields}}
 		</tr>

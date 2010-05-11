@@ -170,6 +170,8 @@ class Joomla15View
 		$tmplSnip->assign('viewname', $this->viewDir);
 		$tmplSnip->assign('tablename', $this->tableNames[0]);
 		$tmplSnip->assign('singleviewname', preg_replace('/list$/i', '', $this->viewDir));
+		$friendly_table_name = preg_replace('/ List$/', '', $this->view->name);
+		$tmplSnip->assign('primary_key', $this->tables[$friendly_table_name]->fields->key);
 
 		$first = true;
 
