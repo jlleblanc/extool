@@ -28,13 +28,13 @@ class Joomla15View
 		$this->snippets = new \Extool\Helpers\SnippetFactory();
 		$this->snippets->setBasePath('targets/Joomla15/snip');
 
-		$this->viewDir = $view->system_name;
+		$this->viewDir = str_replace('_', '', $view->system_name);
 		$this->viewClass = ucfirst($this->viewDir);
 		
 		if ($admin) {
 			foreach ($rep->admin_views as $view) {
 				if ($view->type == 'list') {
-					$this->listViews[] = $view->system_name;
+					$this->listViews[] = str_replace('_', '', $view->system_name);
 				}
 			}
 			$this->tables = $this->rep->admin_models[$this->view->name]->tables;
@@ -122,7 +122,7 @@ class Joomla15View
 		$friendly_table_name = preg_replace('/ List$/', '', $this->view->name);
 		$tmplSnip->assign('primary_key', $this->tables[$friendly_table_name]->fields->key);
 		$tmplSnip->assign('controller', $this->getDefaultController());
-		$tmplSnip->assign('editviewname', preg_replace('/_list$/', '', $this->viewDir));
+		$tmplSnip->assign('editviewname', preg_replace('/list$/', '', $this->viewDir));
 		
 		return $tmplSnip;
 	}
@@ -152,7 +152,7 @@ class Joomla15View
 		$fields = array();
 		
 		$tmplSnip = $this->snippets->getSnippet('singlefront_tmpl');
-		$tmplSnip->assign('viewname', str_replace(' ', '_', strtolower($this->view->name)));
+		$tmplSnip->assign('viewname', $this->viewDir);
 
 		foreach ($this->getTableFields() as $fieldTitle => $fieldValue) {
 			$field = $this->snippets->getSnippet('singlefront_tmpl_fields');
@@ -167,7 +167,7 @@ class Joomla15View
 	private function makeFrontListTmpl()
 	{
 		$tmplSnip = $this->snippets->getSnippet('listfront_tmpl');
-		$tmplSnip->assign('viewname', str_replace(' ', '_', strtolower($this->view->name)));
+		$tmplSnip->assign('viewname', $this->viewDir);
 		$tmplSnip->assign('tablename', $this->tableNames[0]);
 		$tmplSnip->assign('singleviewname', preg_replace('/list$/i', '', $this->viewDir));
 
@@ -293,9 +293,9 @@ class Joomla15View
 	{
 		$controller = $this->viewDir;
 		
-		if (!preg_match('/_list$/i', $controller)) {
-			if (in_array($controller . '_list', $this->listViews)) {
-				$controller .= '_list';
+		if (!preg_match('/list$/i', $controller)) {
+			if (in_array($controller . 'list', $this->listViews)) {
+				$controller .= 'list';
 			}
 		}
 		

@@ -15,7 +15,7 @@ class Joomla15Controller
 	{
 		$this->admin = $admin;
 		$this->table = $table;
-		$this->defaultView = $defaultView->system_name;
+		$this->defaultView = str_replace('_', '', $defaultView->system_name);
 
 		$this->component = $rep->name;
 
@@ -64,7 +64,7 @@ class Joomla15Controller
 		// should match.
 		$funSnip->assign('modelName', $this->defaultView);
 
-		$addView = preg_replace('/_?list/i', '', $this->defaultView);
+		$addView = preg_replace('/list$/i', '', $this->defaultView);
 		$funSnip->assign('add_view', $addView);
 
 		return $funSnip;

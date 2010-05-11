@@ -131,7 +131,7 @@ class Joomla15 implements TargetInterface
 
 		foreach ($this->rep->public_views as $view) {
 			$codeView = new Joomla15View($view, $this->rep);
-			$clean_view_name = strtolower(str_replace(' ', '_', $view->name));
+			$clean_view_name = str_replace(array(' ', '_'), '', $view->system_name);
 
 			$path = "site/views/" . $clean_view_name . '/view.html.php';
 			$this->files->addFile($path, $codeView->makeViewClass());
@@ -142,7 +142,7 @@ class Joomla15 implements TargetInterface
 
 		foreach ($this->rep->admin_views as $view) {
 			$codeView = new Joomla15View($view, $this->rep, true);
-			$clean_view_name = strtolower(str_replace(' ', '_', $view->name));
+			$clean_view_name = str_replace(array(' ', '_'), '', $view->system_name);
 
 			$path = "admin/views/" . $clean_view_name . '/view.html.php';
 			$this->files->addFile($path, $codeView->makeViewClass());
@@ -182,13 +182,13 @@ class Joomla15 implements TargetInterface
 			$table_record_names = array_keys($model->tables);
 
 			if ($view->type == 'list') {
-				$view_name = ucwords($view->system_name);
 				$controller = new Joomla15Controller($this->rep, $view, true, $table_record_names[0]);
 
 				$fileSnip = $this->snippets->getSnippet('code');
 				$fileSnip->assign('code', $controller->makeControllerCode());
 
-				$filename = 'admin/controllers/' . strtolower($view_name) . '.php';
+				$view_name = str_replace(array('_', ' '), '', $view->system_name);
+				$filename = 'admin/controllers/' . $view_name . '.php';
 				$this->files->addFile($filename, $fileSnip);
 			}
 		}
@@ -208,7 +208,7 @@ class Joomla15 implements TargetInterface
 	private function makeModelFiles($model, $admin = false)
 	{
 		$component = $this->rep->name;
-		$modelName = str_replace(' ', '_', strtolower($model->name));
+		$modelName = str_replace(array(' ', '_'), '', strtolower($model->name));
 
 		$modelSnip = $this->snippets->getSnippet('model');
 		$modelSnip->assign('component', ucfirst($component));
@@ -270,12 +270,13 @@ class Joomla15 implements TargetInterface
 		$first = true;
 		foreach ($this->rep->admin_views as $view) {
 			if ($view->type == 'list') {
+				$view_name = str_replace(array('_', ''), '', $view->system_name);
 				$caseSnip = $this->snippets->getSnippet('main_admin_case');
-				$caseSnip->assign('controller', $view->system_name);
+				$caseSnip->assign('controller', $view_name);
 				$mainSnip->add('cases', $caseSnip);
 
 				if ($first) {
-					$defaultController = $view->system_name;
+					$defaultController = $view_name;
 					$first = false;
 				}
 			}
@@ -310,7 +311,7 @@ class Joomla15 implements TargetInterface
 				$snip = $this->snippets->getSnippet('xml_submenu_items');
 				$snip->assign('component', 'com_' . $config->project);
 				$snip->assign('title', ucwords($view->name));
-				$snip->assign('view', $view->system_name);
+				$snip->assign('view', str_replace('_', '', $view->system_name));
 				$xmlSnip->add('submenu_items', $snip);
 			}
 		}
