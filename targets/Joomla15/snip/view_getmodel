@@ -1,2 +1,0 @@
-${{table}} = $this->get('{{table}}');
-$this->assignRef('{{table}}', ${{table}});

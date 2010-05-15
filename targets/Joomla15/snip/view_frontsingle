@@ -1,6 +1,0 @@
-$id = JRequest::getInt('id', 0);
-
-$row =& JTable::getInstance('{{table}}', 'Table');
-$row->load($id);
-
-$this->assignRef('row', $row);

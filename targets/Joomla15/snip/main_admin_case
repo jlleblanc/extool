@@ -1,4 +1,0 @@
-case '{{controller}}':
-	$controllerName = '{{controller}}';
-	break;
-	

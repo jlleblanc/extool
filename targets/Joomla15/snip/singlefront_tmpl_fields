@@ -1,2 +1,0 @@
-<dt>{{fieldTitle}}</dt>
-	<dd><?php echo $this->row->{{fieldValue}} ?></dd>

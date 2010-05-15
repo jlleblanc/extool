@@ -1,9 +1,0 @@
-class Table{{table_uc_name}} extends JTable
-{
-	{{variables}}
-	
-	function __construct(&$db)
-	{
-		parent::__construct('#__{{table_name}}', '{{table_key}}', $db);
-	}
-}
