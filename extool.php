@@ -16,14 +16,15 @@ $adapter->decorateRepresentation($rep);
 if ($rep->validate()) {
 	$target = $factory->getTarget('Joomla15');
 	$target->setRepresentation($rep);
-	$config = $target->getConfiguration();
-	$config->author = 'Joseph LeBlanc';
-	$config->license = 'GPL';
-	$config->version = '1.0';
-	$config->description = '';
-	$config->email = 'contact@jlleblanc.com';
+	$configuration = $target->getConfiguration();
 
-	$target->setConfiguration($config);
+	include 'configs/joe_joomla15.php';
+
+	foreach ($config as $key => $value) {
+		$configuration->$key = $value;
+	}
+
+	$target->setConfiguration($configuration);
 	$files = $target->generate();
 
 	$files->setRoot('/Users/josephleblanc/Desktop/lecomponent');
