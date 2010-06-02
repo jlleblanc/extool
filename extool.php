@@ -18,7 +18,7 @@ if ($rep->validate()) {
 	$target->setRepresentation($rep);
 	$configuration = $target->getConfiguration();
 
-	include 'configs/joe_joomla15.php';
+	include 'configs/joe_joomla15';
 
 	foreach ($config as $key => $value) {
 		$configuration->$key = $value;
