@@ -11,7 +11,7 @@ class TabTables implements \Extool\Adapter\AdapterInterface
 		$this->parse();
 
 		$pieces = explode('/', $this->resource);
-		$rep->setName(array_pop($pieces));
+		$rep->setName(ucfirst(array_pop($pieces)));
 
 		foreach ($this->table_fields as $table_name => $fields) {
 			$table = new \Extool\Representation\Table($table_name);

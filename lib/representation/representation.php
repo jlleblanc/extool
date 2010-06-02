@@ -220,7 +220,9 @@ class Representation
 	 */
 	public function __get($name)
 	{
-		if (isset($this->$name)) {
+		if ($name == 'system_name') {
+			return str_replace(' ', '_', strtolower($this->name));
+		} else if (isset($this->$name)) {
 			return $this->$name;
 		} else {
 			throw new \Exception("Property {$name} does not exist in the Representation");

@@ -7,7 +7,7 @@ include 'include/autoload.php';
 $factory = new Extool\Factory();
 
 $adapter = $factory->getAdapter('TabTables');
-$adapter->setResource('plans/recipes'); // Replace with the plan you wish to use
+$adapter->setResource('plans/volunteers'); // Replace with the plan you wish to use
 
 $rep = new Extool\Representation\Representation();
 
@@ -18,8 +18,6 @@ if ($rep->validate()) {
 	$target->setRepresentation($rep);
 	$config = $target->getConfiguration();
 	$config->author = 'Joseph LeBlanc';
-	$config->project = 'recipes';
-	$config->name = 'Recipes';
 	$config->license = 'GPL';
 	$config->version = '1.0';
 	$config->description = '';
