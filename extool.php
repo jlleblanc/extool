@@ -1,13 +1,20 @@
 <?php
-
+/**
+ * Extool code generator
+ * 
+ * Command line usage:
+ * 
+ * php extool.php AdapterName /path/to/plan /path/to/config /path/to/write
+ * 
+ */
 define('EXTOOL_BASE', __DIR__);
 
 include 'include/autoload.php';
 
 $factory = new Extool\Factory();
 
-$adapter = $factory->getAdapter('TabTables');
-$adapter->setResource('plans/volunteers'); // Replace with the plan you wish to use
+$adapter = $factory->getAdapter($argv[1]);
+$adapter->setResource($argv[2]); // Replace with the plan you wish to use
 
 $rep = new Extool\Representation\Representation();
 
@@ -18,7 +25,7 @@ if ($rep->validate()) {
 	$target->setRepresentation($rep);
 	$configuration = $target->getConfiguration();
 
-	include 'configs/joe_joomla15';
+	include $argv[3];
 
 	foreach ($config as $key => $value) {
 		$configuration->$key = $value;
@@ -27,6 +34,6 @@ if ($rep->validate()) {
 	$target->setConfiguration($configuration);
 	$files = $target->generate();
 
-	$files->setRoot('/Users/josephleblanc/Desktop/lecomponent');
+	$files->setRoot($argv[4]);
 	$files->writeAll();
 }
