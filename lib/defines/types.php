@@ -108,6 +108,28 @@ class Types
 	}
 
 	/**
+	 * Given an array, this function returns the most specific type that the
+	 * values in the array validate.
+	 *
+	 * @param string $values 
+	 * @return string
+	 * @author Joseph LeBlanc
+	 */
+	public function determineTypeArray($values)
+	{
+		$valid = array_keys($this->valid_types);
+		$types = array();
+
+		foreach ($values as $val) {
+			$types[] = $this->determineType($val);
+		}
+
+		$valid = array_intersect($valid, $types);
+
+		return array_pop($valid);
+	}
+
+	/**
 	 * Returns an array of all valid value types.
 	 *
 	 * @return array
