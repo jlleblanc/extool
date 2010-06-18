@@ -21,6 +21,8 @@ class SimpleCSV implements \Extool\Adapter\AdapterInterface
 		$data = new \Extool\Representation\Data($fields);
 		$data->setData($this->keyed_data);
 
+		$rep->addData($data, $resource_name);
+
 		$table = new \Extool\Representation\Table($resource_name);
 		$table->setFields($fields);
 		$rep->addTable($table);
