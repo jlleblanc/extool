@@ -14,8 +14,8 @@ class SimpleCSV implements \Extool\Adapter\AdapterInterface
 		$this->parse();
 
 		$pieces = explode('/', $this->resource);
-		$resource_name = preg_replace('/\..*/', '', array_pop($pieces));
-		$rep->setName(ucfirst($resource_name));
+		$resource_name = ucfirst(preg_replace('/\..*/', '', array_pop($pieces)));
+		$rep->setName($resource_name);
 
 		$fields = $this->determineFields();
 		$data = new \Extool\Representation\Data($fields);
