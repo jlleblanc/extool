@@ -169,6 +169,32 @@ class MySQL
 			throw new \Exception("No Data to be used for generating inserts");
 		}
 
+		$insertSnip = $this->snippets->getSnippet('insert');
+		$insertSnip->assign('table_name', $this->name);
+
+		$used = $this->getUsedDataFields();
+
+		foreach ($used as &$field) {
+			$field = '`' . $field . '`';
+		}
+
+		$field_names = implode(',', $used);
+
+		$insertSnip->assign('field_names', $field_names);
+
+		$sql = array();
+
+		foreach ($this->data as $row) {
+			foreach ($row as &$value) {
+				$value = "'" . mysql_escape_string($value) . "'";
+			}
+
+			$sql[] = '(' . implode(',', $row) . ')';
+		}
+
+		$insertSnip->assign('values', implode(',', $sql) . ';');
+
+		return $insertSnip;
 	}
 
 	/**
@@ -186,6 +212,30 @@ class MySQL
 		}
 
 		$this->lowercase = false;
+	}
+
+	/**
+	 * MySQL doesn't let us just add fields in at random, everything has to
+	 * line up. So this function returns an ordered lookup array to guide
+	 * the generation of INSERTs.
+	 *
+	 * @return array
+	 * @author Joseph LeBlanc
+	 */
+	private function getUsedDataFields()
+	{
+		$used = array();
+
+		foreach ($this->data as $row) {
+			$first_row_fields = array_keys($row);
+			break;
+		}
+
+		foreach ($first_row_fields as $friendly) {
+			$used[$friendly] = $this->data->fields->names[$friendly];
+		}
+
+		return $used;
 	}
 
 	/**
