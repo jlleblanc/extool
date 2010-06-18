@@ -60,11 +60,12 @@ class Representation
 	protected $admin_models = false;
 
 	/**
-	 * Data the extension should be prefilled with on installation.
+	 * Data the extension should be prefilled with on installation, keyed by
+	 * name (table)
 	 *
 	 * @var string
 	 */
-	protected $data = false;
+	protected $data_sets = array();
 
 	/**
 	 * Determines whether the object has all of the properties set necessary
@@ -186,15 +187,16 @@ class Representation
 	 * If the representation already has a dataset, a merge is attempted.
 	 *
 	 * @param Data $data 
+	 * @param string $name
 	 * @return void
 	 * @author Joseph LeBlanc
 	 */
-	public function addData(Data $data)
+	public function addData(Data $data, $name)
 	{
-		if (isset($this->data)) {
-			$this->data->mergeIn($data);
+		if (isset($this->data_sets[$name])) {
+			$this->data_sets[$name]->mergeIn($data);
 		} else {
-			$this->data = $data;
+			$this->data_sets[$name] = $data;
 		}
 	}
 
