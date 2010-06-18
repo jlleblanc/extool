@@ -37,7 +37,7 @@ class Types
 				return false;
 			},
 			'html' => function ($value) {
-				if (strlen(strip_tags($value))) {
+				if (strlen($value) > strlen(strip_tags($value))) {
 					return true;
 				}
 
@@ -57,11 +57,11 @@ class Types
 			},
 			'money' => function ($value) {
 				// TODO
-				return true;
+				return false;
 			},
 			'date' => function ($value) {
 				// TODO
-				return true;
+				return false;
 			},
 			'color_hex' => function ($value) {
 				if (preg_match('/#[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?/', $value)) {
