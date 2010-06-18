@@ -58,7 +58,7 @@ class MySQL
 	 */
 	public function addData(\Extool\Representation\Data $data)
 	{
-		if ($data->fields != $table->fields) {
+		if ($data->fields != $this->table->fields) {
 			throw new \Exception("Data fields do not match Table fields");
 		}
 
