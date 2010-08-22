@@ -1,7 +1,7 @@
 <?php
 namespace Extool\Adapter;
 
-class SimpleCSV implements \Extool\Adapter\AdapterInterface
+class SimpleCSV implements AdapterInterface
 {
 	private $resource;
 	private $headers = array();

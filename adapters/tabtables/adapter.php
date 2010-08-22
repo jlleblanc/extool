@@ -1,7 +1,7 @@
 <?php
 namespace Extool\Adapter;
 
-class TabTables implements \Extool\Adapter\AdapterInterface
+class TabTables implements AdapterInterface
 {
 	private $resource;
 	private $table_fields = array();
