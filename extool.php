@@ -1,10 +1,13 @@
 <?php
 /**
- * Extool code generator
+ * Extool code generator - command line interface
  * 
  * Command line usage:
  * 
- * php extool.php AdapterName /path/to/plan /path/to/config
+ * php extool.php AdapterName /path/to/plan TargetName
+ * 
+ * This is a working example of Extool in action. For different behavior, 
+ * either clone this file, or use Extool as a library.
  * 
  */
 define('EXTOOL_BASE', __DIR__);
@@ -21,11 +24,19 @@ $rep = new Extool\Representation\Representation();
 $adapter->decorateRepresentation($rep);
 
 if ($rep->validate()) {
-	$target = $factory->getTarget('Joomla15');
+	$target = $factory->getTarget($argv[3]);
 	$target->setRepresentation($rep);
 	$configuration = $target->getConfiguration();
 
-	include $argv[3];
+	// pull the config file, fall back on the default config file, then finally
+	// fall back on a blank configuration
+	if (file_exists('targets/' . $argv[3] . '/config')) {
+		include 'targets/' . $argv[3] . '/config';
+	} else if (file_exists('targets/' . $argv[3] . '/config-dist')) {
+		include 'targets/' . $argv[3] . '/config-dist';
+	} else {
+		$config = array();
+	}
 
 	foreach ($config as $key => $value) {
 		$configuration->$key = $value;
