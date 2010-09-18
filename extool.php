@@ -4,7 +4,7 @@
  * 
  * Command line usage:
  * 
- * php extool.php AdapterName /path/to/plan /path/to/config /path/to/write
+ * php extool.php AdapterName /path/to/plan /path/to/config
  * 
  */
 define('EXTOOL_BASE', __DIR__);
@@ -34,6 +34,13 @@ if ($rep->validate()) {
 	$target->setConfiguration($configuration);
 	$files = $target->generate();
 
-	$files->setRoot($argv[4]);
+	$product_name = preg_replace('/\..*$/', '', basename($argv[2]));
+	$path = EXTOOL_BASE . '/products/' . $product_name;
+
+	if (!file_exists($path)) {
+		mkdir($path);
+	}
+
+	$files->setRoot($path);
 	$files->writeAll();
 }
