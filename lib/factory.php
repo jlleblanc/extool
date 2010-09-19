@@ -1,8 +1,23 @@
 <?php
 namespace Extool;
 
+/**
+ * This class is a Factory for Extool objects. 
+ *
+ * @package default
+ * @author Joseph LeBlanc
+ */
 class Factory
-{	
+{
+	/**
+	 * Given the name of an adapter in the 'adapters' folder, this function
+	 * loads the adapter class file, then returns a new object for that 
+	 * adapter.
+	 *
+	 * @param string $name 
+	 * @return object
+	 * @author Joseph LeBlanc
+	 */
 	public function getAdapter($name)
 	{
 		$path = 'adapters/' . $name . '/adapter.php';
@@ -15,6 +30,14 @@ class Factory
 		}
 	}
 
+	/**
+	 * Given the name of a target in the 'targets' folder, this function
+	 * loads the target class file, then returns a new object for that target.
+	 *
+	 * @param string $name 
+	 * @return object
+	 * @author Joseph LeBlanc
+	 */
 	public function getTarget($name)
 	{
 		$path = 'targets/' . $name . '/target.php';

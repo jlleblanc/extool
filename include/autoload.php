@@ -1,4 +1,7 @@
 <?php
+/*
+ *  This code needs some care and attention. Anyone care to help?
+ */
 
 function __autoload($classname)
 {

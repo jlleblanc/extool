@@ -9,7 +9,18 @@ namespace Extool\Helpers;
  */
 class FilePackage
 {
+	/**
+	 * The base path where files will be written.
+	 *
+	 * @var string
+	 */
 	private $fileroot;
+
+	/**
+	 * A nested associative array of File objects.
+	 *
+	 * @var array
+	 */
 	private $files;
 
 	/**

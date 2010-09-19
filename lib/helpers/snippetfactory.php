@@ -11,7 +11,19 @@ namespace Extool\Helpers;
  */
 class SnippetFactory
 {
+	/**
+	 * This array caches snippets in memory to prevent repeated disk reads
+	 * for the same snippet.
+	 *
+	 * @var array
+	 */
 	private $snippet_contents = array();
+
+	/**
+	 * The base folder from which to pull snippets
+	 *
+	 * @var string
+	 */
 	private $base_path = false;
 
 	/**

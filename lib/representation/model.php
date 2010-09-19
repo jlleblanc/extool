@@ -10,8 +10,25 @@ namespace Extool\Representation;
  */
 class Model
 {
+	/**
+	 * The system-friendly name of the model
+	 *
+	 * @var string
+	 */
 	protected $name;
+
+	/**
+	 * An array of Table objects, keyed by table name
+	 *
+	 * @var array
+	 */
 	protected $tables;
+
+	/**
+	 * A Fields object containing the fields the model should retrieve.
+	 *
+	 * @var \Extool\Representation\Fields
+	 */
 	protected $criteria;
 
 	/**

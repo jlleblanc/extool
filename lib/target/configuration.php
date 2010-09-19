@@ -1,13 +1,44 @@
 <?php
 namespace Extool\Target;
 
+/**
+ * A class designed to hold and validate the configuration for a Target
+ *
+ * @package default
+ * @author Joseph LeBlanc
+ */
 class Configuration
 {
+	/**
+	 * An Fields object containing the required fields for the configuration.
+	 *
+	 * @var \Extool\Representation\Fields
+	 */
 	protected $fields;
+
+	/**
+	 * A keyed array of values for the configuration. This is kept separate 
+	 * from the Fields object, which is used for validation.
+	 *
+	 * @var array
+	 */
 	protected $values = array();
-	protected $required;
+
+	/**
+	 * A Types object used to validate data against the types defined in the
+	 * $fields object.
+	 *
+	 * @var \Extool\Defines\Types
+	 */
 	protected $types;
 
+	/**
+	 * Requires a Fields object defining the required fields for the
+	 * configuration.
+	 *
+	 * @param Fields $fields 
+	 * @author Joseph LeBlanc
+	 */
 	public function __construct(\Extool\Representation\Fields $fields)
 	{
 		$this->fields = $fields;
@@ -19,6 +50,15 @@ class Configuration
 		$this->types = new \Extool\Defines\Types();
 	}
 
+	/**
+	 * Magic PHP method that validates configuration values against $fields
+	 * object before setting values
+	 *
+	 * @param string $name 
+	 * @param mixed $value 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function __set($name, $value)
 	{
 		if (isset($this->fields[$name])) {
@@ -33,6 +73,14 @@ class Configuration
 		}
 	}
 
+	/**
+	 * Magic PHP method that only allows retrieval of configuration values that
+	 * actually exist.
+	 *
+	 * @param string $name 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function __get($name)
 	{
 		if ($name == 'fields') {
@@ -44,6 +92,14 @@ class Configuration
 		}
 	}
 
+	/**
+	 * Magic PHP method for testing whether or not a certain configuration
+	 * field exists
+	 *
+	 * @param string $name 
+	 * @return boolean
+	 * @author Joseph LeBlanc
+	 */
 	public function __isset($name)
 	{
 		if (isset($this->values[$name])) {
@@ -53,6 +109,13 @@ class Configuration
 		return false;
 	}
 
+	/**
+	 * Magic PHP method for unsetting configuration fields, if they exist
+	 *
+	 * @param string $name 
+	 * @return void
+	 * @author Joseph LeBlanc
+	 */
 	public function __unset($name)
 	{
 		if (isset($this->values[$name])) {

@@ -9,14 +9,39 @@ namespace Extool\Helpers;
  */
 class MySQL
 {
+	/**
+	 * The Table object the SQL will be generated from.
+	 *
+	 * @var \Extool\Representation\Table
+	 */
 	protected $table;
 
+	/**
+	 * The name of the table to be generated.
+	 *
+	 * @var string
+	 */
 	protected $name;
 
+	/**
+	 * A Data object with the contents of the table
+	 *
+	 * @var \Extool\Representation\Data
+	 */
 	protected $data;
 
+	/**
+	 * A SnippetFactory for retrieving snippets
+	 *
+	 * @var \Extool\Helpers\SnippetFactory
+	 */
 	protected $snippets;
 
+	/**
+	 * Determines whether or not column names should be converted to lowercase
+	 *
+	 * @var boolean
+	 */
 	private $lowercase = true;
 
 	/**
