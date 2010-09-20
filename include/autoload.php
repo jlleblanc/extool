@@ -1,4 +1,12 @@
 <?php
+/**
+ * Extool Code Generator
+ * 
+ * Copyright 2010 Joseph LeBlanc
+ * See LICENSE file for licensing details.
+ * 
+ */
+
 /*
  *  This code needs some care and attention. Anyone care to help?
  */

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Extool Code Generator
+ * 
+ * Copyright 2010 Joseph LeBlanc
+ * See LICENSE file for licensing details.
+ * 
+ */
 namespace Extool\Adapter;
 
 class SimpleCSV implements AdapterInterface

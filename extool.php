@@ -1,6 +1,9 @@
 <?php
 /**
- * Extool code generator - command line interface
+ * Extool Code Generator - command line interface
+ * 
+ * Copyright 2010 Joseph LeBlanc
+ * See LICENSE file for licensing details.
  * 
  * Command line usage:
  * 
