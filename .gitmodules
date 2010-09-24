@@ -1,3 +1,0 @@
-[submodule "targets"]
-	path = targets
-	url = git@github.com:jlleblanc/extool-targets.git
