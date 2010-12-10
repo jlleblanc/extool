@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Extool" basedir="." default="dist">
+
+	<property name="build_dir" value="../extool_dist" />
+
+	<fileset dir="." id="allfiles">
+		<include name="extool.php" />
+		<include name="include/**" />
+		<include name="lib/**" />
+		<include name="LICENSE" />
+		<include name="plans/employees.csv" />
+		<include name="plans/recipes" />
+		<include name="README.md" />
+	</fileset>
+
+	<target name="dist">
+		<echo msg="Making directory extool_dist" />
+		<mkdir dir="${build_dir}" />
+		<echo msg="Copying everything" />
+		<copy todir="${build_dir}">
+			<fileset refid="allfiles" />
+		</copy>
+		<mkdir dir="${build_dir}/products" />
+		<mkdir dir="${build_dir}/targets" />
+		<mkdir dir="${build_dir}/adapters" />
+	</target>
+
+</project>
