@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Extool" basedir="." default="dist">
 
-	<property name="build_dir" value="../extool_dist" />
+	<property name="version_number" value="1.0.1" />
+	<property name="build_dir" value="../extool_dist_${version_number}" />
 
 	<fileset dir="." id="allfiles">
 		<include name="extool.php" />
@@ -23,7 +24,7 @@
 		<mkdir dir="${build_dir}/products" />
 		<mkdir dir="${build_dir}/targets" />
 		<mkdir dir="${build_dir}/adapters" />
-		<zip destfile="../extool.zip" basedir="${build_dir}" />
+		<zip destfile="../extool_${version_number}.zip" basedir="${build_dir}" />
 		<delete dir="${build_dir}" includeemptydirs="true" failonerror="true" />
 	</target>
 
