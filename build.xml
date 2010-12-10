@@ -23,6 +23,8 @@
 		<mkdir dir="${build_dir}/products" />
 		<mkdir dir="${build_dir}/targets" />
 		<mkdir dir="${build_dir}/adapters" />
+		<zip destfile="../extool.zip" basedir="${build_dir}" />
+		<delete dir="${build_dir}" includeemptydirs="true" failonerror="true" />
 	</target>
 
 </project>
